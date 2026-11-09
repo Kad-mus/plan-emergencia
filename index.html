@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Emergencia Familiar</title>
+<meta name="theme-color" content="#141a24">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<script src="config.js"></script>
+<style id="app-css">
+:root{--bg:#f4f5f7;--card:#fff;--ink:#1e2430;--mut:#667085;--line:#e3e6eb;--acc:#ea580c;--acc2:#fff1e8;--ok:#047857;--okb:#d1fae5;--warn:#92400e;--warnb:#fef3c7;--bad:#991b1b;--badb:#fee2e2;--blue:#1d4ed8;--blueb:#dbeafe;--dark:#141a24}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:40px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--blue)}
+.hdr{background:var(--dark);color:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.hdr .wrap{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:40px;height:40px;border-radius:10px;background:var(--acc);display:grid;place-items:center;font-size:20px}
+.brand h1{font-size:19px;margin:0;line-height:1.2}
+.brand p{margin:2px 0 0;color:#9aa4b2;font-size:12.5px}
+.hdr-r{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sos{background:#b91c1c;color:#fff;font-weight:700;border-radius:8px;padding:6px 10px;font-size:13px;letter-spacing:.3px}
+.badge{font-size:12px;border-radius:999px;padding:4px 10px;background:#243042;color:#cbd5e1;white-space:nowrap}
+.badge.ok{background:#064e3b;color:#a7f3d0}.badge.lo{background:#3b2f12;color:#fde68a}.badge.ro{background:#3f1d1d;color:#fecaca}
+.tabs{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 12px 10px;cursor:pointer;white-space:nowrap;color:var(--mut);font-weight:500}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc);font-weight:650}
+main.wrap{padding-top:18px}
+h2{font-size:18px;margin:0 0 2px}
+.sub{color:var(--mut);font-size:12.5px;margin:0 0 14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.bar .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.btn:hover{border-color:#c7ccd4}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.p:hover{background:#c2410c}
+.btn.d{background:var(--dark);border-color:var(--dark);color:#fff}
+.btn.sm{padding:4px 8px;font-size:12px}
+.btn.x{border:0;background:none;color:var(--mut);padding:4px 6px}
+.btn.x:hover{color:var(--bad)}
+input[type=text],input[type=number],input[type=date],input[type=search],select,textarea{border:1px solid #cfd4dc;border-radius:8px;padding:7px 9px;background:#fff;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid #fdba74;border-color:var(--acc)}
+.tools input[type=search]{width:200px}
+.tools select{width:auto}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:900px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g4,.g3,.g2{grid-template-columns:1fr}.tools input[type=search]{width:100%}.brand h1{font-size:17px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:12px;color:var(--mut);font-weight:500;display:flex;gap:6px;align-items:center}
+.kpi .v{font-size:22px;font-weight:700;margin:4px 0 2px}
+.kpi .s{font-size:12px;color:var(--mut)}
+.meter{height:7px;background:#eceef2;border-radius:9px;overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;border-radius:9px;background:var(--ok)}
+.meter i.w{background:#d97706}.meter i.b{background:#dc2626}
+.tbl{background:#fff;border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#f1f3f6;text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;color:#4a5363;padding:9px 10px;white-space:nowrap}
+td{padding:8px 10px;border-top:1px solid #eef0f3;vertical-align:middle}
+tr:hover td{background:#fafbfc}
+.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:999px;background:#eef0f3;font-weight:500;white-space:nowrap}
+.st{display:inline-block;font-size:11.5px;padding:3px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
+.st.ok{background:var(--okb);color:var(--ok)}.st.w{background:var(--warnb);color:var(--warn)}.st.b{background:var(--badb);color:var(--bad)}.st.n{background:#eef0f3;color:var(--mut)}
+.prio-Crítica{color:var(--bad);font-weight:650}.prio-Alta{color:#b45309;font-weight:600}.prio-Recomendada{color:var(--mut)}
+.muted{color:var(--mut)}.small{font-size:12px}
+.chk{width:18px;height:18px;accent-color:var(--ok);cursor:pointer}
+.qty{display:inline-flex;gap:4px;align-items:center}
+.qty b{min-width:34px;text-align:right;display:inline-block}
+.alerts{display:grid;gap:6px}
+.al{padding:8px 12px;border-radius:8px;font-size:13px}
+.al.b{background:var(--badb);color:var(--bad)}.al.w{background:var(--warnb);color:var(--warn)}.al.i{background:var(--blueb);color:var(--blue)}.al.ok{background:var(--okb);color:var(--ok)}
+.field label{display:block;font-size:12px;font-weight:600;color:#3d4554;margin-bottom:4px}
+.field .h{font-size:11.5px;color:var(--mut);margin-top:3px}
+.sec{margin-top:22px}
+.sec h3{font-size:15px;margin:0 0 10px}
+.guides{columns:2 360px;column-gap:14px}
+.guide{break-inside:avoid;margin-bottom:14px;border-top:4px solid var(--c,#64748b)}
+.guide h4{margin:0 0 8px;font-size:15px;color:var(--c,#334155)}
+.guide .body{font-size:13px;color:#384050}
+.guide .body ul{margin:4px 0 6px;padding-left:18px}
+.guide .body li{margin:3px 0}
+.guide .body h5{margin:8px 0 3px;font-size:13px}
+.guide .body p{margin:4px 0}
+.gact{display:flex;gap:4px;justify-content:flex-end;margin-top:6px}
+.modal-bg{position:fixed;inset:0;background:rgba(15,20,30,.55);display:flex;align-items:flex-start;justify-content:center;padding:30px 12px;z-index:50;overflow-y:auto}
+.modal{background:#fff;border-radius:14px;max-width:560px;width:100%;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h3{margin:0 0 12px;font-size:17px}
+.modal .grid{gap:10px}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:9px 16px;border-radius:9px;font-size:13px;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.printopts label{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fff;cursor:pointer}
+.printopts label small{display:block;color:var(--mut)}
+.empty{padding:22px;text-align:center;color:var(--mut)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.kv b{font-weight:600}
+textarea{min-height:70px;resize:vertical}
+.login{max-width:380px;margin:8vh auto;padding:24px}.login h2{margin-bottom:4px}.login .grid{gap:12px;margin-top:14px}.err{color:var(--bad);font-size:13px;min-height:18px}.who{font-size:12px;color:#9aa4b2}.btn.hd{background:#243042;border-color:#334155;color:#e2e8f0}
+.foot-note{margin-top:28px;font-size:12px;color:var(--mut);text-align:center}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script id="app-state" type="application/json">null</script>
+<script id="app-js">
+(function(){
+'use strict';
+
+/* ================= DATOS POR DEFECTO ================= */
+var TODAY_ISO = isoDate(new Date());
+var CAT_FOOD = ['Agua','Hidratos','Proteínas','Lácteos y Grasas','Verduras y Frutas','Extras','Otros'];
+var CAT_TOOLS = ['Cocción','Encendido','Agua','Higiene','Energía','Botiquín','Herramientas'];
+var CAT_BAG = ['Agua y comida','Salud','Documentos y dinero','Ropa y abrigo','Luz y comunicación','Herramientas','Higiene'];
+var PRIOS = ['Crítica','Alta','Recomendada'];
+var GUIDE_COLORS = {'Azul':'#1d4ed8','Verde':'#047857','Ámbar':'#b45309','Rojo':'#b91c1c','Morado':'#7c3aed','Gris':'#475569','Naranja':'#ea580c','Cian':'#0e7490'};
+
+var n = 0; function id(){ n++; return 'd' + n; }
+
+function defaults(){
+  return {
+    version: 2,
+    savedAt: 0,
+    config: { household:'Familia', people:3, days:14, waterDrink:3, waterExtra:1, kcal:2500, gasMinDay:45, gasMinCan:120, gasStock:6, basePeople:3, baseDays:14, lastReview:'', warnDays:90 },
+    food: [
+      {id:id(),cat:'Agua',name:'Agua embotellada / garrafas',unit:'L',qty:90,rec:126,kcal:0,exp:'2027-11-01',loc:'',notes:'3 L/persona/día para beber'},
+      {id:id(),cat:'Hidratos',name:'Arroz y pasta variada',unit:'kg',qty:8,rec:8,kcal:3600,exp:'2027-06-15',loc:'',notes:''},
+      {id:id(),cat:'Hidratos',name:'Legumbres cocidas en bote',unit:'tarros',qty:10,rec:15,kcal:300,exp:'2028-03-20',loc:'',notes:'No necesitan cocción'},
+      {id:id(),cat:'Hidratos',name:'Galletas / tostadas / crackers',unit:'kg',qty:0,rec:2,kcal:4500,exp:'',loc:'',notes:''},
+      {id:id(),cat:'Hidratos',name:'Copos de avena / cereales',unit:'kg',qty:0,rec:2,kcal:3700,exp:'',loc:'',notes:'Desayuno sin cocinar'},
+      {id:id(),cat:'Proteínas',name:'Atún / sardinas en lata',unit:'latas',qty:24,rec:30,kcal:200,exp:'2026-12-10',loc:'',notes:'Mejor abre-fácil'},
+      {id:id(),cat:'Proteínas',name:'Pollo / magro de cerdo en lata',unit:'latas',qty:8,rec:15,kcal:250,exp:'2027-08-01',loc:'',notes:''},
+      {id:id(),cat:'Lácteos y Grasas',name:'Leche UHT',unit:'L',qty:14,rec:14,kcal:640,exp:'2027-02-15',loc:'',notes:''},
+      {id:id(),cat:'Lácteos y Grasas',name:'Aceite de oliva',unit:'L',qty:3,rec:3,kcal:8100,exp:'2027-10-10',loc:'',notes:''},
+      {id:id(),cat:'Lácteos y Grasas',name:'Frutos secos / crema de cacahuete',unit:'kg',qty:1,rec:1.5,kcal:6000,exp:'2026-11-20',loc:'',notes:''},
+      {id:id(),cat:'Verduras y Frutas',name:'Verduras en conserva',unit:'latas',qty:15,rec:15,kcal:80,exp:'2028-01-10',loc:'',notes:''},
+      {id:id(),cat:'Verduras y Frutas',name:'Fruta en almíbar',unit:'latas',qty:5,rec:8,kcal:300,exp:'2027-05-18',loc:'',notes:''},
+      {id:id(),cat:'Extras',name:'Chocolate / barritas energéticas',unit:'uds',qty:10,rec:20,kcal:220,exp:'2026-12-01',loc:'',notes:''},
+      {id:id(),cat:'Extras',name:'Azúcar',unit:'kg',qty:1,rec:1,kcal:4000,exp:'2029-01-01',loc:'',notes:''},
+      {id:id(),cat:'Extras',name:'Miel / mermelada',unit:'kg',qty:0,rec:1,kcal:2800,exp:'',loc:'',notes:''},
+      {id:id(),cat:'Otros',name:'Café soluble, sal, especias, caldo en pastillas',unit:'lote',qty:1,rec:1,kcal:0,exp:'2029-01-01',loc:'',notes:''}
+    ],
+    tools: [
+      {id:id(),name:'Abrelatas manual de mariposa (x2)',cat:'Cocción',prio:'Crítica',have:true,tip:'Guarda dos unidades. Imprescindible para latas.'},
+      {id:id(),name:'Hornillo de gas portátil',cat:'Cocción',prio:'Crítica',have:true,tip:'Solo con buena ventilación (riesgo de monóxido de carbono).'},
+      {id:id(),name:'Cazuela pequeña de acero con tapa',cat:'Cocción',prio:'Alta',have:true,tip:'La tapa reduce mucho el gas necesario para hervir.'},
+      {id:id(),name:'Platos, vasos y cubiertos reutilizables',cat:'Cocción',prio:'Alta',have:false,tip:'Lavar con poca agua y una gota de jabón.'},
+      {id:id(),name:'Pastillas Esbit / alcohol sólido + soporte',cat:'Encendido',prio:'Recomendada',have:false,tip:'Respaldo ultracompacto si falla el gas.'},
+      {id:id(),name:'Encendedor piezo + cerillas de tormenta',cat:'Encendido',prio:'Crítica',have:true,tip:'Guardar en bolsa hermética antihumedad.'},
+      {id:id(),name:'Lejía apta para desinfección de agua de bebida + cuentagotas',cat:'Agua',prio:'Crítica',have:false,tip:'Comprueba que la etiqueta lo indica. Revisa la fecha: pierde eficacia.'},
+      {id:id(),name:'Pastillas potabilizadoras',cat:'Agua',prio:'Alta',have:false,tip:'Alternativa ligera a la lejía; también para la mochila.'},
+      {id:id(),name:'Garrafa o bidón vacío de 10–20 L',cat:'Agua',prio:'Recomendada',have:false,tip:'Para recoger agua de reparto o almacenar más.'},
+      {id:id(),name:'Toallitas húmedas biodegradables',cat:'Higiene',prio:'Crítica',have:true,tip:'Higiene personal sin gastar agua potable.'},
+      {id:id(),name:'Papel de cocina y papel higiénico',cat:'Higiene',prio:'Alta',have:true,tip:'Aplastar los rollos ahorra espacio.'},
+      {id:id(),name:'Gel hidroalcohólico',cat:'Higiene',prio:'Alta',have:false,tip:'Manos limpias antes de comer y tras el WC.'},
+      {id:id(),name:'Bolsas de basura resistentes + cubo con tapa',cat:'Higiene',prio:'Alta',have:false,tip:'Para WC de emergencia si no hay agua en la cisterna.'},
+      {id:id(),name:'Linternas frontales (x3)',cat:'Energía',prio:'Crítica',have:true,tip:'Manos libres para cocinar y moverse a oscuras.'},
+      {id:id(),name:'Farol LED de pilas',cat:'Energía',prio:'Recomendada',have:false,tip:'Más seguro que las velas.'},
+      {id:id(),name:'Pilas alcalinas AA y AAA precintadas',cat:'Energía',prio:'Crítica',have:true,tip:'Guardar fuera de los aparatos para evitar sulfatación.'},
+      {id:id(),name:'Powerbank 20.000 mAh (cargada)',cat:'Energía',prio:'Crítica',have:true,tip:'Recárgala cada 3 meses.'},
+      {id:id(),name:'Radio AM/FM de pilas o dinamo',cat:'Energía',prio:'Crítica',have:false,tip:'Principal vía de información oficial en un apagón.'},
+      {id:id(),name:'Cargador solar pequeño',cat:'Energía',prio:'Recomendada',have:false,tip:'Para apagones de varios días.'},
+      {id:id(),name:'Detector de monóxido de carbono a pilas',cat:'Energía',prio:'Alta',have:false,tip:'Si usas hornillo dentro de casa.'},
+      {id:id(),name:'Botiquín completo + medicación habitual',cat:'Botiquín',prio:'Crítica',have:false,tip:'Gasas, vendas, antiséptico, analgésicos, tiritas, guantes, tijeras.'},
+      {id:id(),name:'Mantas térmicas (x3)',cat:'Botiquín',prio:'Alta',have:false,tip:'Ocupan poco y retienen el calor corporal.'},
+      {id:id(),name:'Mascarillas FFP2',cat:'Botiquín',prio:'Recomendada',have:false,tip:'Polvo, humo o ceniza.'},
+      {id:id(),name:'Navaja multiusos / Leatherman',cat:'Herramientas',prio:'Crítica',have:true,tip:'Alicates, tijeras y destornilladores en uno.'},
+      {id:id(),name:'Cinta americana',cat:'Herramientas',prio:'Alta',have:false,tip:'Sellar ventanas en confinamiento, reparaciones.'},
+      {id:id(),name:'Extintor de polvo ABC',cat:'Herramientas',prio:'Alta',have:false,tip:'Revisión según etiqueta.'},
+      {id:id(),name:'Llave para la válvula de gas / llave inglesa',cat:'Herramientas',prio:'Recomendada',have:false,tip:'Para cortar suministros al evacuar.'}
+    ],
+    bag: [
+      {id:id(),name:'Agua (3 L por persona)',cat:'Agua y comida',have:false,notes:''},
+      {id:id(),name:'Comida que no necesite cocinar (3 días)',cat:'Agua y comida',have:false,notes:'Barritas, latas abre-fácil, frutos secos'},
+      {id:id(),name:'Pastillas potabilizadoras',cat:'Agua y comida',have:false,notes:''},
+      {id:id(),name:'Botiquín pequeño + medicación personal (7 días)',cat:'Salud',have:false,notes:''},
+      {id:id(),name:'Gafas / lentillas de repuesto',cat:'Salud',have:false,notes:''},
+      {id:id(),name:'Mascarillas FFP2 y gel hidroalcohólico',cat:'Salud',have:false,notes:''},
+      {id:id(),name:'Copias de DNI, tarjeta sanitaria, seguros y escrituras',cat:'Documentos y dinero',have:false,notes:'En bolsa estanca'},
+      {id:id(),name:'Dinero en efectivo (billetes pequeños y monedas)',cat:'Documentos y dinero',have:false,notes:''},
+      {id:id(),name:'Lista de contactos y plan familiar en papel',cat:'Documentos y dinero',have:false,notes:'Imprímela desde esta app'},
+      {id:id(),name:'Llaves de repuesto (casa y coche)',cat:'Documentos y dinero',have:false,notes:''},
+      {id:id(),name:'Mapa en papel de la zona',cat:'Documentos y dinero',have:false,notes:''},
+      {id:id(),name:'Muda de ropa, ropa de abrigo y chubasquero',cat:'Ropa y abrigo',have:false,notes:''},
+      {id:id(),name:'Calzado cómodo y resistente',cat:'Ropa y abrigo',have:false,notes:''},
+      {id:id(),name:'Manta térmica',cat:'Ropa y abrigo',have:false,notes:''},
+      {id:id(),name:'Linterna frontal + pilas de repuesto',cat:'Luz y comunicación',have:false,notes:''},
+      {id:id(),name:'Radio pequeña de pilas',cat:'Luz y comunicación',have:false,notes:''},
+      {id:id(),name:'Powerbank cargada + cables',cat:'Luz y comunicación',have:false,notes:''},
+      {id:id(),name:'Silbato',cat:'Luz y comunicación',have:false,notes:'Para pedir ayuda sin gastar energía'},
+      {id:id(),name:'Navaja multiusos',cat:'Herramientas',have:false,notes:''},
+      {id:id(),name:'Mechero y cerillas en bolsa hermética',cat:'Herramientas',have:false,notes:''},
+      {id:id(),name:'Cinta americana y bolsas de basura',cat:'Herramientas',have:false,notes:''},
+      {id:id(),name:'Papel higiénico, toallitas y cepillo de dientes',cat:'Higiene',have:false,notes:''}
+    ],
+    contacts: [
+      {id:id(),name:'Emergencias',role:'Policía, bomberos, ambulancias, protección civil',phone:'112',notes:'Gratuito, funciona sin saldo'},
+      {id:id(),name:'Información Toxicológica',role:'Intoxicaciones',phone:'91 562 04 20',notes:'24 horas'},
+      {id:id(),name:'Familiar / contacto fuera de la zona',role:'Punto de contacto común',phone:'',notes:'Todos avisan a esta persona'},
+      {id:id(),name:'Médico de cabecera / CAP',role:'Salud',phone:'',notes:''},
+      {id:id(),name:'Compañía de seguros del hogar',role:'Seguros',phone:'',notes:'Nº de póliza:'},
+      {id:id(),name:'Vecino de confianza',role:'Apoyo cercano',phone:'',notes:''}
+    ],
+    plan: { meet1:'', meet2:'', gasValve:'', waterValve:'', elecPanel:'', bagPlace:'', notes:'' },
+    guides: defaultGuides(),
+    log: []
+  };
+}
+
+function defaultGuides(){
+  return [
+    {id:id(),title:'1. Potabilización de agua',color:'Azul',body:
+'## Lejía\n- Usa solo lejía cuya etiqueta diga **"apta para la desinfección de agua de bebida"** (sin perfume ni aditivos).\n- **2 gotas por litro** de agua clara; **4 gotas** si está turbia o fría.\n- Agita y deja reposar **30 minutos** tapada. Debe notarse un ligero olor a cloro; si no, repite la dosis y espera 15 minutos más.\n## Ebullición\n- Hierve a borbotones **al menos 1 minuto** (3 minutos en altitud). Deja enfriar tapada en un recipiente limpio.\n## Filtrado previo\n- Si el agua está turbia, déjala reposar y fíltrala con un paño limpio o un filtro de café **antes** de desinfectar.\n- La lejía y la ebullición no eliminan contaminación química (combustibles, productos industriales): no consumas esa agua.'},
+    {id:id(),title:'2. Almacenamiento y rotación del agua',color:'Cian',body:
+'- Guarda las garrafas en un lugar **fresco, oscuro** y lejos de productos químicos, combustibles o pinturas.\n- Usa agua envasada y precintada; respeta su fecha y rótala por la más antigua (FIFO).\n- Si envasas agua del grifo: botellas limpias de uso alimentario, bien cerradas, y **renuévala cada 6 meses**.\n- Calcula además agua para cocinar y para higiene: la app suma 1 L/persona/día extra por defecto.\n- En un corte de suministro, llena bañera y cubos **solo para WC y limpieza**, nunca para beber.'},
+    {id:id(),title:'3. Cocina con poco gas y con seguridad',color:'Verde',body:
+'## Cocción retenida (técnica noruega)\n- Hierve pasta o arroz 2–3 minutos, apaga, tapa bien y envuelve la olla con una manta o toalla gruesa. Termina de cocinarse con el calor residual (pasta 15–20 min, arroz 25–30 min).\n## Ahorro\n- Siempre con **tapa**. Llama adaptada al fondo de la olla.\n- Legumbres de bote, latas y avena no necesitan cocción.\n## Seguridad\n- Usa el hornillo solo con **ventilación** (ventana entreabierta). **Nunca** uses barbacoas ni generadores dentro de casa.\n- Síntomas de monóxido de carbono: dolor de cabeza, mareo, náuseas, somnolencia. Sal al aire libre y llama al **112**.\n- No dejes el fuego desatendido. Cambia los cartuchos lejos de cualquier llama.'},
+    {id:id(),title:'4. Apagón: nevera y congelador',color:'Gris',body:
+'- **No abras** la nevera ni el congelador si no es imprescindible.\n- Nevera cerrada: mantiene el frío unas **4 horas**.\n- Congelador lleno: unas **48 horas**; medio lleno, unas **24 horas**.\n- Consume primero lo perecedero de la nevera, después el congelador y por último la despensa.\n- Ante la duda, tíralo: carne, pescado, lácteos o huevos que hayan estado más de 2 horas por encima de 4 °C.'},
+    {id:id(),title:'5. Primeros auxilios básicos',color:'Rojo',body:
+'## Protocolo PAS\n- **P**roteger la zona y a ti mismo. **A**visar al 112. **S**ocorrer.\n## Hemorragias\n- Presión directa continua con gasas o tela limpia durante al menos 10 minutos, sin levantar para mirar. Eleva la extremidad si es posible.\n- Si la hemorragia de un brazo o pierna no se controla y no llega ayuda: torniquete 5–7 cm por encima de la herida y **anota la hora**.\n## Quemaduras\n- Agua a temperatura ambiente 10–20 minutos. Sin hielo, pomadas ni pasta de dientes. Cubre con gasa limpia.\n## Inconsciente\n- Si respira: posición lateral de seguridad y vigila.\n- Si no respira: 112 y RCP, 30 compresiones (100–120/min, 5–6 cm) y 2 insuflaciones si sabes hacerlas.'},
+    {id:id(),title:'6. Frío y calor',color:'Ámbar',body:
+'## Hipotermia\n- Cambia la ropa húmeda inmediatamente. Abriga por capas, también cabeza y pies.\n- Manta térmica: **cara plateada hacia el cuerpo** para retener el calor.\n- Bebidas calientes azucaradas si está consciente. Nunca alcohol.\n## Golpe de calor\n- Lleva a la persona a la sombra, afloja la ropa, enfría con paños húmedos y da agua a sorbos si está consciente. Si hay confusión o deja de sudar: 112.'},
+    {id:id(),title:'7. Evacuación y cierre de vivienda',color:'Morado',body:
+'- Sigue siempre las indicaciones de las autoridades y ten la mochila de 72 h lista junto a la puerta.\n- Antes de salir: **cierra la llave del gas**, **baja el interruptor general** de la luz y **cierra la llave de paso del agua**.\n- Cierra puertas y ventanas; lleva la medicación, la documentación y el efectivo.\n- Avisa al contacto común de la familia adónde vais.\n- Documentación: DNI, escrituras y pólizas en papel, dentro de una bolsa hermética, con algo de efectivo en billetes pequeños.'},
+    {id:id(),title:'8. Confinamiento por accidente químico',color:'Naranja',body:
+'Aplica cuando las autoridades o las sirenas de aviso (en el Camp de Tarragona, plan PLASEQTA) indican confinamiento.\n- **Entra** en el edificio más cercano y quédate dentro.\n- **Cierra** puertas y ventanas y **apaga** ventilación, aire acondicionado y extractores. Sella rendijas con toallas húmedas o cinta americana.\n- Aléjate de las ventanas; mejor una habitación interior.\n- **Escucha la radio** o los avisos oficiales (ES-Alert en el móvil).\n- **No llames por teléfono** salvo emergencia: deja las líneas libres.\n- **No vayas a buscar a los niños al colegio**: allí también los confinan y protegen.\n- No salgas hasta que lo indiquen las autoridades.'},
+    {id:id(),title:'9. Comunicación e información',color:'Azul',body:
+'- **ES-Alert**: los avisos oficiales llegan al móvil como alerta; no hace falta instalar nada.\n- En apagón, la radio de pilas es la fuente más fiable: emisoras públicas como RNE o Catalunya Ràdio y emisoras locales.\n- Si la red está saturada, los **SMS** y mensajes cortos pasan mejor que las llamadas.\n- Ahorra batería: modo ahorro, brillo bajo, datos y Bluetooth desactivados cuando no los uses.\n- Acordad un **contacto común fuera de la zona** al que todos avisen.'},
+    {id:id(),title:'10. Higiene y saneamiento sin agua',color:'Verde',body:
+'- No uses agua potable para la cisterna. Con agua no potable (bañera, lluvia) puedes descargar echándola directamente en la taza.\n- WC de emergencia: doble bolsa de basura dentro de la taza o de un cubo, con serrín o arena para gatos tras cada uso. Ciérrala y guárdala en un cubo con tapa.\n- Manos: gel hidroalcohólico antes de comer y después del WC.\n- Fregado: un barreño con poca agua y jabón, y otro para aclarar con una gota de lejía.'}
+  ];
+}
+
+/* ================= ESTADO ================= */
+var state;
+var embedded = null;
+try { embedded = JSON.parse(document.getElementById('app-state').textContent); } catch(e) { embedded = null; }
+state = normalize(embedded);
+var LS_KEY = 'plan-emergencia-familiar-v2';
+var mode = 'init';           // init | login | loading | cloud | local | denied
+var CFG = window.FIREBASE_CONFIG || null, PLAN_ID = window.PLAN_ID || 'familia';
+var OFFLINE_COPY = !!window.PLAN_OFFLINE;
+var downloadsApi = null, isHosted = false;
+var fb = null, pushTimer = null, dirty = false, fromCache = false, loginErr = '', loginInfo = '';
+var view = { tab: 'resumen', foodQ:'', foodCat:'all', foodAlerts:false, toolCat:'all', bagCat:'all', print:{resumen:true,despensa:true,compra:true,utensilios:true,mochila:true,plan:true,guias:true,diario:true,salidas:true,blanco:true} };
+
+function normalize(s){
+  var d = defaults();
+  if (!s || typeof s !== 'object') return d;
+  var out = {};
+  out.version = 2;
+  out.savedAt = s.savedAt || 0;
+  out.config = Object.assign({}, d.config, s.config || {});
+  ['food','tools','bag','contacts','guides','log'].forEach(function(k){ out[k] = Array.isArray(s[k]) ? s[k] : d[k]; });
+  out.plan = Object.assign({}, d.plan, s.plan || {});
+  // compatibilidad con el formato antiguo (foodData/utensilsData)
+  if (Array.isArray(s.foodData)) out.food = s.foodData.map(function(f){ var q = parseFloat(f.stock)||0, r = parseFloat(f.rec)||0; return {id:'i'+f.id,cat:f.category||'Otros',name:f.name||'',unit:String(f.stock||'').replace(/[\d.,\s]+/,'').trim()||'uds',qty:q,rec:r,kcal:0,exp:f.expDate||'',loc:'',notes:''}; });
+  if (Array.isArray(s.utensilsData)) out.tools = s.utensilsData.map(function(u){ return {id:'u'+u.id,name:u.name,cat:u.cat,prio:u.priority||'Alta',have:!!u.status,tip:u.tip||''}; });
+  return out;
+}
+
+function loadLocal(){
+  try {
+    var raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    var s = JSON.parse(raw);
+    if (s && (s.savedAt||0) > (state.savedAt||0)) state = normalize(s);
+  } catch(e){}
+}
+function saveLocal(){ try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){} }
+
+function commit(msg){
+  state.savedAt = Date.now();
+  if (mode === 'local') saveLocal();
+  if (mode === 'cloud' && fb){
+    dirty = true;
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(pushRemote, 800);
+  }
+  render();
+  if (msg) toast(msg);
+}
+
+function pushRemote(){
+  pushTimer = null;
+  if (!fb || !fb.user) return;
+  fb.F.setDoc(fb.ref, { data: JSON.stringify(state), savedAt: state.savedAt, by: fb.user.email || '' })
+   .then(function(){ dirty = false; setBadge(); })
+   .catch(function(e){
+     if (e && e.code === 'permission-denied'){ mode = 'denied'; render(); }
+     else toast('No se pudo guardar: ' + (e && e.code || 'error'));
+   });
+  setBadge();
+}
+
+/* ================= UTILIDADES ================= */
+function isoDate(d){ var m = d.getMonth()+1, dd = d.getDate(); return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(dd<10?'0':'')+dd; }
+function pDate(s){ if (!s) return null; var p = String(s).split('-'); if (p.length<3) return null; var d = new Date(+p[0], +p[1]-1, +p[2]); return isNaN(d) ? null : d; }
+function daysUntil(s){ var d = pDate(s); if (!d) return null; var t = pDate(TODAY_ISO); return Math.round((d - t)/86400000); }
+function fDate(s){ var d = pDate(s); if (!d) return '—'; return d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+function fmt(x, dec){ if (x === null || x === undefined || isNaN(x)) return '—'; return Number(x).toLocaleString('es-ES',{maximumFractionDigits: dec===undefined?1:dec}); }
+function esc(s){ return String(s===undefined||s===null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function num(v){ var x = parseFloat(String(v).replace(',','.')); return isNaN(x)?0:x; }
+function uid(){ return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function pct(a,b){ return b>0 ? Math.round(a/b*100) : 0; }
+function meter(p){ var c = p>=100?'':(p>=60?'w':'b'); return '<div class="meter"><i class="'+c+'" style="width:'+Math.min(100,Math.max(0,p))+'%"></i></div>'; }
+function find(col,id){ return state[col].filter(function(x){return x.id===id;})[0]; }
+function colorOf(name){ return GUIDE_COLORS[name] || name || '#475569'; }
+
+function mdLite(text){
+  var lines = String(text||'').split(/\r?\n/), html = '', inList = false;
+  function inl(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'); }
+  lines.forEach(function(l){
+    var t = l.trim();
+    if (/^[-•*]\s+/.test(t)){ if(!inList){html+='<ul>';inList=true;} html += '<li>'+inl(t.replace(/^[-•*]\s+/,''))+'</li>'; return; }
+    if (inList){ html+='</ul>'; inList=false; }
+    if (/^#{1,3}\s+/.test(t)) html += '<h5>'+inl(t.replace(/^#{1,3}\s+/,''))+'</h5>';
+    else if (t) html += '<p>'+inl(t)+'</p>';
+  });
+  if (inList) html += '</ul>';
+  return html;
+}
+
+/* ================= CÁLCULOS ================= */
+function calc(){
+  var c = state.config, people = Math.max(1,num(c.people)), days = Math.max(1,num(c.days));
+  var factor = (people*days)/(Math.max(1,num(c.basePeople))*Math.max(1,num(c.baseDays)));
+  var dailyWater = people*(num(c.waterDrink)+num(c.waterExtra));
+  var waterNeed = dailyWater*days, drinkNeed = people*num(c.waterDrink)*days;
+  var waterStock = 0, kcalStock = 0, expired = [], rotate = [], shopping = [];
+  state.food.forEach(function(f){
+    var du = daysUntil(f.exp), isExp = du !== null && du < 0;
+    if (isExp) expired.push(f); else if (du !== null && du <= num(c.warnDays)) rotate.push(f);
+    if (!isExp){
+      if (f.cat === 'Agua') waterStock += num(f.qty);
+      kcalStock += num(f.qty)*num(f.kcal);
+    }
+    var r = recOf(f, factor);
+    if (r > 0 && num(f.qty) < r) shopping.push({name:f.name, cat:f.cat, need: r-num(f.qty), unit:f.unit, kind:'food'});
+  });
+  var kcalNeed = people*num(c.kcal)*days;
+  var waterDays = dailyWater>0 ? waterStock/dailyWater : 0;
+  var foodDays = num(c.kcal)>0 ? kcalStock/(people*num(c.kcal)) : 0;
+  var gasNeed = num(c.gasMinCan)>0 ? Math.ceil(days*num(c.gasMinDay)/num(c.gasMinCan)) : 0;
+  var gasDays = num(c.gasMinDay)>0 ? num(c.gasStock)*num(c.gasMinCan)/num(c.gasMinDay) : 0;
+  if (num(c.gasStock) < gasNeed) shopping.push({name:'Cartuchos de gas 230 g', cat:'Combustible', need: gasNeed-num(c.gasStock), unit:'cartuchos', kind:'food'});
+  var toolsReady = state.tools.filter(function(t){return t.have;}).length;
+  var critMissing = state.tools.filter(function(t){return !t.have && t.prio==='Crítica';});
+  state.tools.forEach(function(t){ if(!t.have) shopping.push({name:t.name, cat:t.cat, need:null, unit:'', kind:'tool', prio:t.prio}); });
+  var bagReady = state.bag.filter(function(b){return b.have;}).length;
+  var revDays = state.config.lastReview ? -daysUntil(state.config.lastReview) : null;
+  return {people:people, days:days, factor:factor, dailyWater:dailyWater, waterNeed:waterNeed, drinkNeed:drinkNeed, waterStock:waterStock, kcalNeed:kcalNeed, kcalStock:kcalStock,
+    waterDays:waterDays, foodDays:foodDays, autonomy: Math.min(waterDays, foodDays), gasNeed:gasNeed, gasDays:gasDays,
+    expired:expired, rotate:rotate, shopping:shopping, toolsReady:toolsReady, critMissing:critMissing, bagReady:bagReady, revDays:revDays};
+}
+function recOf(f, factor){ var r = num(f.rec)*factor; return Math.round(r*10)/10; }
+function statusOf(f){
+  var du = daysUntil(f.exp);
+  if (du === null) return {c:'n', t:'Sin fecha'};
+  if (du < 0) return {c:'b', t:'¡CADUCADO!'};
+  if (du <= num(state.config.warnDays)) return {c:'w', t: du < 31 ? 'Rotar ('+du+' d)' : 'Rotar ('+Math.round(du/30.44)+' m)'};
+  return {c:'ok', t:'En fecha'};
+}
+
+/* ================= RENDER ================= */
+var TABS = [
+  ['resumen','📊 Resumen'],['despensa','📦 Despensa'],['utensilios','🛠️ Utensilios'],['mochila','🎒 Mochila 72 h'],
+  ['plan','👪 Plan familiar'],['guias','📚 Guías'],['diario','📝 Diario'],['imprimir','🖨️ Imprimir'],['copias','💾 Copias']
+];
+var root = document.getElementById('root');
+
+function render(){
+  if (mode === 'init' || mode === 'login' || mode === 'denied' || mode === 'loading'){ root.innerHTML = vGate(); return; }
+  var k = calc();
+  var h = '';
+  h += '<header class="hdr"><div class="wrap"><div class="brand"><div class="logo">🛡️</div><div><h1>Plan de Emergencia · '+esc(state.config.household)+'</h1><p>Reserva para '+fmt(k.people,0)+' personas · '+fmt(k.days,0)+' días · autonomía actual ≈ '+fmt(Math.floor(k.autonomy),0)+' días</p></div></div>';
+  h += '<div class="hdr-r"><span class="sos">SOS 112</span><span id="badge" class="badge"></span>'+(mode==='cloud'&&fb&&fb.user?'<span class="who">'+esc(fb.user.email)+'</span><button class="btn sm hd" data-act="logout">Salir</button>':'')+'</div></div></header>';
+  h += '<nav class="tabs"><div class="wrap">';
+  TABS.forEach(function(t){ h += '<button class="tab'+(view.tab===t[0]?' on':'')+'" data-act="tab" data-v="'+t[0]+'">'+t[1]+'</button>'; });
+  h += '</div></nav><main class="wrap">';
+  h += ({resumen:vResumen,despensa:vDespensa,utensilios:vUtensilios,mochila:vMochila,plan:vPlan,guias:vGuias,diario:vDiario,imprimir:vImprimir,copias:vCopias}[view.tab]||vResumen)(k);
+  h += '<div class="foot-note">Última modificación: '+(state.savedAt? new Date(state.savedAt).toLocaleString('es-ES') : '—')+' · Imprime una copia en papel después de cada revisión.</div>';
+  h += '</main>';
+  var sx = window.scrollX, sy = window.scrollY;
+  var act = document.activeElement, actKey = act && act.getAttribute && (act.getAttribute('data-k') || act.id);
+  root.innerHTML = h;
+  setBadge();
+  window.scrollTo(sx, sy);
+  if (actKey && act.id === 'food-q'){ var el = document.getElementById('food-q'); if (el){ el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }
+}
+
+function setBadge(){
+  var b = document.getElementById('badge'); if (!b) return;
+  var t, c;
+  if (mode === 'cloud'){
+    if (!navigator.onLine || fromCache){ t = dirty ? '📴 Sin conexión · cambios pendientes' : '📴 Sin conexión · datos en el dispositivo'; c = 'lo'; }
+    else if (dirty){ t = '⏳ Sincronizando…'; c = 'lo'; }
+    else { t = '☁️ Sincronizado'; c = 'ok'; }
+  } else { t = OFFLINE_COPY ? '💾 Copia offline · guardado en este navegador' : '💾 Modo local · guardado en este navegador'; c = 'lo'; }
+  b.textContent = t; b.className = 'badge ' + c;
+}
+
+function vGate(){
+  var h = '<header class="hdr"><div class="wrap"><div class="brand"><div class="logo">🛡️</div><div><h1>Plan de Emergencia Familiar</h1><p>Acceso privado</p></div></div><div class="hdr-r"><span class="sos">SOS 112</span></div></div></header>';
+  h += '<div class="card login">';
+  if (mode === 'init' || mode === 'loading'){
+    h += '<h2>Cargando…</h2><p class="sub">'+(mode==='loading'?'Descargando los datos del plan.':'Conectando con el servidor.')+'</p>';
+  } else if (mode === 'denied'){
+    h += '<h2>Usuario no autorizado</h2><p class="sub">'+esc(fb&&fb.user?fb.user.email:'')+' no tiene permiso para ver este plan. Hay que añadirlo a las reglas de Firestore.</p><button class="btn" data-act="logout">Cambiar de usuario</button>';
+  } else {
+    h += '<h2>Entrar</h2><p class="sub">Usa el correo y la contraseña con los que te han dado de alta.</p>';
+    h += '<form id="loginf"><div class="grid"><div class="field"><label>Correo electrónico</label><input type="text" name="email" autocomplete="username" inputmode="email" required></div>';
+    h += '<div class="field"><label>Contraseña</label><input type="password" name="pass" autocomplete="current-password" required style="border:1px solid #cfd4dc;border-radius:8px;padding:7px 9px;width:100%"></div>';
+    h += '<div class="err">'+esc(loginErr)+'</div>'+(loginInfo?'<div class="al ok">'+esc(loginInfo)+'</div>':'');
+    h += '<button type="submit" class="btn p" style="justify-content:center">Entrar</button>';
+    h += '<button type="button" class="btn x" data-act="forgot" style="justify-self:center">He olvidado mi contraseña</button></div></form>';
+    h += '<p class="small muted" style="margin-top:14px">Si no hay conexión y nunca has entrado en este dispositivo, no se pueden cargar los datos: usa la copia offline o las hojas impresas.</p>';
+  }
+  return h + '</div>';
+}
+
+function kpi(icon, label, value, sub, p){
+  return '<div class="card kpi"><div class="l">'+icon+' '+label+'</div><div class="v">'+value+'</div><div class="s">'+sub+'</div>'+(p===undefined?'':meter(p))+'</div>';
+}
+
+function vResumen(k){
+  var c = state.config, h = '';
+  h += '<div class="bar"><div><h2>Resumen de preparación</h2><p class="sub">Necesidades calculadas frente a lo que tienes almacenado.</p></div></div>';
+  h += '<div class="grid g4">';
+  h += kpi('💧','Agua almacenada', fmt(k.waterStock,0)+' / '+fmt(k.waterNeed,0)+' L', pct(k.waterStock,k.waterNeed)+'% · cubre '+fmt(k.waterDays,1)+' días', pct(k.waterStock,k.waterNeed));
+  h += kpi('🍞','Calorías almacenadas', fmt(k.kcalStock/1000,0)+' / '+fmt(k.kcalNeed/1000,0)+' mil kcal', pct(k.kcalStock,k.kcalNeed)+'% · cubre '+fmt(k.foodDays,1)+' días', pct(k.kcalStock,k.kcalNeed));
+  h += kpi('⏱️','Autonomía real', fmt(Math.floor(k.autonomy),0)+' de '+fmt(k.days,0)+' días', 'Limita: '+(k.waterDays<=k.foodDays?'el agua':'la comida'), pct(k.autonomy,k.days));
+  h += kpi('🔥','Cartuchos de gas', fmt(c.gasStock,0)+' / '+fmt(k.gasNeed,0), 'Cubren '+fmt(k.gasDays,1)+' días de cocina', pct(num(c.gasStock),k.gasNeed));
+  h += kpi('⚠️','Caducidades', '<span style="color:var(--bad)">'+k.expired.length+'</span> · <span style="color:var(--warn)">'+k.rotate.length+'</span>', 'caducados · a rotar (≤ '+fmt(c.warnDays,0)+' días)');
+  h += kpi('🛠️','Utensilios listos', k.toolsReady+' / '+state.tools.length, k.critMissing.length ? k.critMissing.length+' críticos sin tener' : 'Todos los críticos listos', pct(k.toolsReady,state.tools.length));
+  h += kpi('🎒','Mochila 72 h', k.bagReady+' / '+state.bag.length, 'elementos preparados', pct(k.bagReady,state.bag.length));
+  var rv = k.revDays;
+  h += kpi('📅','Última revisión', c.lastReview? fDate(c.lastReview) : 'Sin registrar', rv===null?'Revisa la reserva cada 6 meses': (rv>180?'<span style="color:var(--bad)">Hace '+rv+' días: toca revisar</span>':'Hace '+rv+' días'));
+  h += '</div>';
+
+  // alertas
+  var al = [];
+  k.expired.forEach(function(f){ al.push(['b','⛔ <b>'+esc(f.name)+'</b> caducó el '+fDate(f.exp)+'. Retíralo o repónlo.']); });
+  k.rotate.forEach(function(f){ al.push(['w','🔄 <b>'+esc(f.name)+'</b> caduca el '+fDate(f.exp)+': consúmelo en casa y repón uno nuevo (FIFO).']); });
+  k.critMissing.forEach(function(t){ al.push(['b','🧰 Falta un utensilio crítico: <b>'+esc(t.name)+'</b>.']); });
+  if (k.waterStock < k.waterNeed) al.push(['w','💧 Faltan <b>'+fmt(k.waterNeed-k.waterStock,0)+' L</b> de agua para cubrir '+fmt(k.days,0)+' días (beber + cocina/higiene).']);
+  if (k.kcalStock < k.kcalNeed) al.push(['w','🍞 Faltan <b>'+fmt((k.kcalNeed-k.kcalStock)/1000,1)+' mil kcal</b> para el objetivo.']);
+  if (num(c.gasStock) < k.gasNeed) al.push(['w','🔥 Faltan <b>'+fmt(k.gasNeed-num(c.gasStock),0)+'</b> cartuchos de gas.']);
+  if (rv === null || rv > 180) al.push(['i','📅 Registra una revisión general cuando compruebes fechas, pilas y powerbank.']);
+  h += '<div class="sec"><div class="bar"><h3 style="margin:0">Avisos</h3><div class="tools"><button class="btn sm" data-act="review">✅ Marcar revisión hoy</button><button class="btn sm" data-act="tab" data-v="imprimir">🖨️ Imprimir lista de la compra</button></div></div>';
+  h += '<div class="alerts">' + (al.length? al.map(function(a){return '<div class="al '+a[0]+'">'+a[1]+'</div>';}).join('') : '<div class="al ok">✅ Todo en orden. ¡Buen trabajo!</div>') + '</div></div>';
+
+  // parámetros
+  h += '<div class="sec"><h3>Parámetros del plan</h3><div class="card"><div class="grid g4">';
+  h += cfgField('household','Nombre del hogar','text','Aparece en las hojas impresas');
+  h += cfgField('people','Personas','number','');
+  h += cfgField('days','Días de autonomía objetivo','number','');
+  h += cfgField('kcal','kcal por persona y día','number','Adulto activo ≈ 2.000–2.500');
+  h += cfgField('waterDrink','Agua para beber (L/persona/día)','number','Mínimo recomendado: 3 L');
+  h += cfgField('waterExtra','Agua cocina + higiene (L/persona/día)','number','Pon 0 si no quieres contarla');
+  h += cfgField('gasMinDay','Minutos de hornillo al día','number','Con cocción retenida ≈ 30–45 min');
+  h += cfgField('gasMinCan','Minutos que dura un cartucho 230 g','number','Mira tu hornillo; a potencia media ≈ 2 h');
+  h += cfgField('gasStock','Cartuchos de gas almacenados','number','');
+  h += cfgField('warnDays','Aviso de rotación (días antes)','number','90 días ≈ 3 meses');
+  h += cfgField('basePeople','Cantidades recomendadas calculadas para… personas','number','Base de la columna "Recomendado"');
+  h += cfgField('baseDays','…y para estos días','number','Se escalan automáticamente');
+  h += '</div></div></div>';
+
+  h += '<div class="sec"><h3>Necesidades calculadas</h3><div class="card"><div class="kv">';
+  h += '<span>Agua para beber</span><b>'+fmt(k.drinkNeed,0)+' L</b>';
+  h += '<span>Agua cocina + higiene</span><b>'+fmt(k.waterNeed-k.drinkNeed,0)+' L</b>';
+  h += '<span>Agua total</span><b>'+fmt(k.waterNeed,0)+' L ('+fmt(k.dailyWater,1)+' L/día)</b>';
+  h += '<span>Calorías diarias del grupo</span><b>'+fmt(k.people*num(c.kcal),0)+' kcal</b>';
+  h += '<span>Calorías totales</span><b>'+fmt(k.kcalNeed,0)+' kcal</b>';
+  h += '<span>Cartuchos de gas</span><b>'+fmt(k.gasNeed,0)+' ('+fmt(k.days*num(c.gasMinDay)/60,1)+' h de fuego)</b>';
+  h += '</div></div></div>';
+  return h;
+}
+function cfgField(key,label,type,help){
+  var v = state.config[key];
+  return '<div class="field"><label>'+esc(label)+'</label><input type="'+type+'" '+(type==='number'?'step="any" min="0"':'')+' data-cfg="'+key+'" value="'+esc(v)+'">'+(help?'<div class="h">'+esc(help)+'</div>':'')+'</div>';
+}
+
+function vDespensa(k){
+  var h = '<div class="bar"><div><h2>Despensa y sistema FIFO</h2><p class="sub">Ordenada por fecha de caducidad: consume primero lo que vence antes y repón detrás. Recomendado ajustado a '+fmt(k.people,0)+' personas / '+fmt(k.days,0)+' días.</p></div>';
+  h += '<div class="tools"><input type="search" id="food-q" placeholder="Buscar alimento…" value="'+esc(view.foodQ)+'">';
+  h += '<select data-view="foodCat"><option value="all">Todas las categorías</option>'+CAT_FOOD.map(function(c){return '<option'+(view.foodCat===c?' selected':'')+'>'+c+'</option>';}).join('')+'</select>';
+  h += '<label class="small" style="display:flex;gap:5px;align-items:center"><input type="checkbox" class="chk" data-view="foodAlerts" '+(view.foodAlerts?'checked':'')+'> Solo avisos</label>';
+  h += '<button class="btn p" data-act="edit" data-col="food">＋ Añadir alimento</button></div></div>';
+  var q = view.foodQ.toLowerCase();
+  var rows = state.food.filter(function(f){
+    if (view.foodCat!=='all' && f.cat!==view.foodCat) return false;
+    if (q && (f.name+' '+f.cat+' '+(f.loc||'')).toLowerCase().indexOf(q)<0) return false;
+    if (view.foodAlerts){ var s = statusOf(f).c; var short = num(f.qty) < recOf(f,k.factor); if (s!=='b' && s!=='w' && !short) return false; }
+    return true;
+  }).sort(function(a,b){
+    var ca = CAT_FOOD.indexOf(a.cat), cb = CAT_FOOD.indexOf(b.cat); if (ca!==cb) return ca-cb;
+    return (a.exp||'9999') < (b.exp||'9999') ? -1 : 1;
+  });
+  h += '<div class="tbl"><table><thead><tr><th>Categoría</th><th>Producto</th><th class="num">Almacenado</th><th class="num">Recomendado</th><th>Cobertura</th><th class="num">kcal totales</th><th>Caducidad</th><th>Estado</th><th>Ubicación</th><th></th></tr></thead><tbody>';
+  if (!rows.length) h += '<tr><td colspan="10" class="empty">No hay alimentos que coincidan.</td></tr>';
+  rows.forEach(function(f){
+    var r = recOf(f,k.factor), p = pct(num(f.qty), r), s = statusOf(f);
+    h += '<tr><td><span class="pill">'+esc(f.cat)+'</span></td><td><b>'+esc(f.name)+'</b>'+(f.notes?'<div class="small muted">'+esc(f.notes)+'</div>':'')+'</td>';
+    h += '<td class="num"><span class="qty"><button class="btn sm" data-act="dec" data-id="'+f.id+'" title="Consumir 1">−</button><b>'+fmt(f.qty)+'</b><button class="btn sm" data-act="inc" data-id="'+f.id+'" title="Añadir 1">＋</button></span> <span class="small muted">'+esc(f.unit)+'</span></td>';
+    h += '<td class="num">'+(r?fmt(r)+' <span class="small muted">'+esc(f.unit)+'</span>':'—')+'</td>';
+    h += '<td style="min-width:90px">'+(r? '<span class="small">'+p+'%</span>'+meter(p) : '—')+'</td>';
+    h += '<td class="num">'+(num(f.kcal)? fmt(num(f.qty)*num(f.kcal),0) : '—')+'</td>';
+    h += '<td style="white-space:nowrap">'+fDate(f.exp)+'</td><td><span class="st '+s.c+'">'+s.t+'</span></td><td class="small">'+esc(f.loc||'')+'</td>';
+    h += '<td class="num"><button class="btn x" data-act="edit" data-col="food" data-id="'+f.id+'" title="Editar">✏️</button><button class="btn x" data-act="del" data-col="food" data-id="'+f.id+'" title="Eliminar">🗑️</button></td></tr>';
+  });
+  h += '</tbody></table></div>';
+  h += '<p class="small muted" style="margin-top:8px">Los botones − / ＋ restan o suman una unidad (útil para registrar el consumo diario). Los productos caducados no cuentan en el agua ni en las calorías.</p>';
+  return h;
+}
+
+function checklistTable(col, cats, catKey, k){
+  var filter = view[catKey];
+  var h = '<div class="tbl"><table><thead><tr><th style="width:60px">Listo</th><th>Elemento</th><th>Categoría</th>'+(col==='tools'?'<th>Prioridad</th><th>Uso / truco</th>':'<th>Notas</th>')+'<th></th></tr></thead><tbody>';
+  var rows = state[col].filter(function(t){ return filter==='all' || t.cat===filter; }).sort(function(a,b){ var ca=cats.indexOf(a.cat), cb=cats.indexOf(b.cat); if (ca!==cb) return ca-cb; if(col==='tools'){ return PRIOS.indexOf(a.prio)-PRIOS.indexOf(b.prio);} return 0; });
+  if (!rows.length) h += '<tr><td colspan="6" class="empty">Nada en esta categoría.</td></tr>';
+  rows.forEach(function(t){
+    h += '<tr><td><input type="checkbox" class="chk" data-act="toggle" data-col="'+col+'" data-id="'+t.id+'" '+(t.have?'checked':'')+'></td>';
+    h += '<td><b>'+esc(t.name)+'</b> '+(t.have?'<span class="st ok">Listo</span>':'<span class="st n">Pendiente</span>')+'</td><td><span class="pill">'+esc(t.cat)+'</span></td>';
+    if (col==='tools') h += '<td class="small prio-'+esc(t.prio)+'">'+esc(t.prio)+'</td><td class="small muted">'+esc(t.tip||'')+'</td>';
+    else h += '<td class="small muted">'+esc(t.notes||'')+'</td>';
+    h += '<td class="num"><button class="btn x" data-act="edit" data-col="'+col+'" data-id="'+t.id+'">✏️</button><button class="btn x" data-act="del" data-col="'+col+'" data-id="'+t.id+'">🗑️</button></td></tr>';
+  });
+  return h + '</tbody></table></div>';
+}
+
+function vUtensilios(k){
+  var h = '<div class="bar"><div><h2>Utensilios, energía e iluminación</h2><p class="sub">Marca lo que ya tienes. Los críticos que falten aparecen en el resumen y en la lista de la compra.</p></div><div class="tools">';
+  h += '<select data-view="toolCat"><option value="all">Todas las categorías</option>'+CAT_TOOLS.map(function(c){return '<option'+(view.toolCat===c?' selected':'')+'>'+c+'</option>';}).join('')+'</select>';
+  h += '<button class="btn p" data-act="edit" data-col="tools">＋ Añadir utensilio</button></div></div>';
+  return h + checklistTable('tools', CAT_TOOLS, 'toolCat', k);
+}
+
+function vMochila(k){
+  var h = '<div class="bar"><div><h2>Mochila de evacuación (72 h)</h2><p class="sub">Una mochila por persona, junto a la puerta. Revisa medicación, pilas y agua cada 6 meses. Listos: '+k.bagReady+' de '+state.bag.length+'.</p></div><div class="tools">';
+  h += '<select data-view="bagCat"><option value="all">Todas las categorías</option>'+CAT_BAG.map(function(c){return '<option'+(view.bagCat===c?' selected':'')+'>'+c+'</option>';}).join('')+'</select>';
+  h += '<button class="btn" data-act="bagreset">↺ Desmarcar todo</button><button class="btn p" data-act="edit" data-col="bag">＋ Añadir elemento</button></div></div>';
+  return h + checklistTable('bag', CAT_BAG, 'bagCat', k);
+}
+
+function vPlan(k){
+  var p = state.plan, h = '<div class="bar"><div><h2>Plan familiar y contactos</h2><p class="sub">Lo que todos deben saber aunque no haya móvil. Imprímelo y guarda una copia en cada mochila.</p></div></div>';
+  h += '<div class="grid g2"><div class="card"><h3 style="margin:0 0 10px;font-size:15px">Puntos clave</h3><div class="grid">';
+  h += planField('meet1','Punto de encuentro cerca de casa','Ej. portal del edificio de enfrente');
+  h += planField('meet2','Punto de encuentro fuera del barrio','Si no se puede volver a casa');
+  h += planField('bagPlace','Dónde están las mochilas y la reserva','');
+  h += '</div></div><div class="card"><h3 style="margin:0 0 10px;font-size:15px">Suministros de la vivienda</h3><div class="grid">';
+  h += planField('gasValve','Llave de paso del gas','Ubicación y cómo se cierra');
+  h += planField('waterValve','Llave de paso del agua','');
+  h += planField('elecPanel','Cuadro eléctrico / interruptor general','');
+  h += '</div></div></div>';
+  h += '<div class="card" style="margin-top:12px"><div class="field"><label>Notas importantes (alergias, medicación, mascotas, necesidades especiales…)</label><textarea data-plan="notes">'+esc(p.notes)+'</textarea></div></div>';
+  h += '<div class="sec"><div class="bar"><h3 style="margin:0">Contactos</h3><button class="btn p" data-act="edit" data-col="contacts">＋ Añadir contacto</button></div>';
+  h += '<div class="tbl"><table><thead><tr><th>Nombre</th><th>Función</th><th>Teléfono</th><th>Notas</th><th></th></tr></thead><tbody>';
+  state.contacts.forEach(function(c){
+    h += '<tr><td><b>'+esc(c.name)+'</b></td><td class="small">'+esc(c.role)+'</td><td style="white-space:nowrap;font-weight:600">'+(c.phone?esc(c.phone):'<span class="muted">—</span>')+'</td><td class="small muted">'+esc(c.notes)+'</td><td class="num"><button class="btn x" data-act="edit" data-col="contacts" data-id="'+c.id+'">✏️</button><button class="btn x" data-act="del" data-col="contacts" data-id="'+c.id+'">🗑️</button></td></tr>';
+  });
+  h += '</tbody></table></div></div>';
+  return h;
+}
+function planField(key,label,ph){ return '<div class="field"><label>'+esc(label)+'</label><input type="text" data-plan="'+key+'" value="'+esc(state.plan[key])+'" placeholder="'+esc(ph)+'"></div>'; }
+
+function vGuias(k){
+  var h = '<div class="bar"><div><h2>Guías y protocolos</h2><p class="sub">Puedes editar, borrar o añadir tus propias guías. Formato: líneas con "- " son viñetas, "## " es un subtítulo y **texto** va en negrita.</p></div><div class="tools"><button class="btn p" data-act="edit" data-col="guides">＋ Añadir guía</button></div></div>';
+  h += '<div class="guides">';
+  state.guides.forEach(function(g, i){
+    h += '<div class="card guide" style="--c:'+colorOf(g.color)+'"><h4>'+esc(g.title)+'</h4><div class="body">'+mdLite(g.body)+'</div>';
+    h += '<div class="gact"><button class="btn x" data-act="gup" data-id="'+g.id+'" title="Subir">⬆️</button><button class="btn x" data-act="edit" data-col="guides" data-id="'+g.id+'">✏️</button><button class="btn x" data-act="del" data-col="guides" data-id="'+g.id+'">🗑️</button></div></div>';
+  });
+  h += '</div>';
+  h += '<p class="small muted">Contenido orientativo para preparación doméstica. En una emergencia real sigue siempre las indicaciones de las autoridades y del 112.</p>';
+  return h;
+}
+
+function vDiario(k){
+  var h = '<div class="bar"><div><h2>Diario de emergencia</h2><p class="sub">Durante una emergencia, anota cada día el consumo y las incidencias. Sirve para racionar y saber cuánto queda.</p></div><div class="tools"><button class="btn p" data-act="edit" data-col="log">＋ Nueva entrada</button></div></div>';
+  var used = state.log.reduce(function(a,l){return a+num(l.water);},0);
+  h += '<div class="grid g3" style="margin-bottom:12px">'+kpi('📆','Entradas', state.log.length, 'días registrados')+kpi('💧','Agua consumida', fmt(used,1)+' L', 'media '+fmt(state.log.length?used/state.log.length:0,1)+' L/día')+kpi('🔥','Gas usado', fmt(state.log.reduce(function(a,l){return a+num(l.gas);},0),0)+' min', 'de hornillo')+'</div>';
+  h += '<div class="tbl"><table><thead><tr><th>Fecha</th><th class="num">Agua (L)</th><th>Comidas</th><th class="num">Gas (min)</th><th>Salud / incidencias</th><th></th></tr></thead><tbody>';
+  if (!state.log.length) h += '<tr><td colspan="6" class="empty">Sin entradas. Ojalá siga así.</td></tr>';
+  state.log.slice().sort(function(a,b){return a.date<b.date?1:-1;}).forEach(function(l){
+    h += '<tr><td style="white-space:nowrap">'+fDate(l.date)+'</td><td class="num">'+fmt(l.water)+'</td><td class="small">'+esc(l.meals)+'</td><td class="num">'+fmt(l.gas,0)+'</td><td class="small">'+esc(l.notes)+'</td><td class="num"><button class="btn x" data-act="edit" data-col="log" data-id="'+l.id+'">✏️</button><button class="btn x" data-act="del" data-col="log" data-id="'+l.id+'">🗑️</button></td></tr>';
+  });
+  return h + '</tbody></table></div>';
+}
+
+var PRINT_SECTIONS = [
+  ['resumen','Resumen del plan','Parámetros, necesidades y estado actual'],
+  ['plan','Plan familiar y contactos','Puntos de encuentro, llaves de paso, teléfonos'],
+  ['despensa','Inventario de la despensa','Con columnas en blanco para recontar a mano'],
+  ['compra','Lista de la compra','Lo que falta para completar la reserva'],
+  ['utensilios','Checklist de utensilios','Casillas ☐ para marcar a bolígrafo'],
+  ['mochila','Checklist de la mochila 72 h','Una columna por persona'],
+  ['guias','Guías y protocolos','Todas las guías, listas para consultar sin luz ni móvil'],
+  ['diario','Hoja de control diario','Una fila por día: agua, comidas, gas, salud'],
+  ['salidas','Registro de salidas de la despensa','Anota cada producto que se consume'],
+  ['blanco','Inventario en blanco','Para productos nuevos o un recuento desde cero']
+];
+function vImprimir(k){
+  var h = '<div class="bar"><div><h2>Hojas para imprimir</h2><p class="sub">Elige qué hojas quieres. Se genera un documento A4 en blanco y negro, pensado para llevar el control a bolígrafo si fallan la luz, internet o los dispositivos.</p></div></div>';
+  h += '<div class="grid g2 printopts">';
+  PRINT_SECTIONS.forEach(function(s){ h += '<label><input type="checkbox" class="chk" data-print="'+s[0]+'" '+(view.print[s[0]]?'checked':'')+'><span><b>'+s[1]+'</b><small>'+s[2]+'</small></span></label>'; });
+  h += '</div><div class="tools" style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">';
+  h += '<button class="btn p" data-act="print">🖨️ '+(isHosted?'Descargar hojas para imprimir':'Imprimir / guardar PDF')+'</button>';
+  h += '<button class="btn" data-act="printall">Marcar todas</button><button class="btn" data-act="printnone">Desmarcar todas</button></div>';
+  if (isHosted) h += '<div class="al i" style="margin-top:12px">ℹ️ Desde esta página web se descarga un archivo HTML. Al abrirlo se muestra directamente el diálogo de impresión; ahí puedes imprimir o elegir "Guardar como PDF".</div>';
+  h += '<div class="al w" style="margin-top:8px">📌 Consejo: imprime el plan completo después de cada revisión y guárdalo en una funda junto a la reserva y otra copia en cada mochila.</div>';
+  return h;
+}
+
+function vCopias(k){
+  var h = '<div class="bar"><div><h2>Copias de seguridad y uso sin internet</h2><p class="sub">'+(mode==='cloud'?'Los cambios se guardan en la nube (Firebase) y se ven en todos los dispositivos donde entréis con vuestro usuario. Sin conexión se guardan en el dispositivo y se sincronizan al volver la red.':'Ahora los cambios se guardan solo en este navegador.')+'</p></div></div>';
+  h += '<div class="grid g3">';
+  h += '<div class="card"><h3 style="margin:0 0 6px;font-size:15px">📴 App sin conexión</h3><p class="small muted">Descarga la app completa con tus datos actuales en un único archivo HTML. Ábrelo con cualquier navegador sin internet (PC, móvil o un pendrive). Funciona igual y guarda los cambios en ese navegador.</p><button class="btn p" data-act="dlapp">Descargar app offline</button></div>';
+  h += '<div class="card"><h3 style="margin:0 0 6px;font-size:15px">💾 Exportar datos</h3><p class="small muted">Copia de seguridad de todos los datos en JSON. Útil para pasar los datos de la copia offline a la versión web, o al revés.</p><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" data-act="dljson">Descargar JSON</button><button class="btn" data-act="copyjson">Copiar al portapapeles</button></div></div>';
+  h += '<div class="card"><h3 style="margin:0 0 6px;font-size:15px">📥 Importar datos</h3><p class="small muted">Carga un JSON exportado (también el formato de tu versión anterior). Sustituye los datos actuales.</p><input type="file" id="imp" accept=".json,application/json"></div>';
+  h += '</div>';
+  h += '<div class="sec card"><h3 style="margin:0 0 6px;font-size:15px">♻️ Restablecer</h3><p class="small muted">Vuelve a los datos de ejemplo. Exporta antes una copia si quieres conservar los tuyos.</p><button class="btn" data-act="reset">Restablecer datos de ejemplo</button> <button class="btn" data-act="resetguides">Restaurar solo las guías por defecto</button></div>';
+  return h;
+}
+
+/* ================= MODALES ================= */
+var SCHEMAS = {
+  food: { title:'alimento', fields:[
+    {k:'cat',l:'Categoría',t:'select',o:CAT_FOOD},{k:'name',l:'Nombre',t:'text',req:true,ph:'Ej. Atún en lata'},
+    {k:'qty',l:'Cantidad almacenada',t:'number'},{k:'unit',l:'Unidad',t:'text',ph:'latas, kg, L, uds…'},
+    {k:'rec',l:'Recomendado (para la base del plan)',t:'number',h:'Se escala según personas y días'},{k:'kcal',l:'kcal por unidad',t:'number',h:'Mira la etiqueta: kcal/100 g × gramos'},
+    {k:'exp',l:'Fecha de caducidad',t:'date'},{k:'loc',l:'Ubicación',t:'text',ph:'Ej. altillo pasillo'},
+    {k:'notes',l:'Notas',t:'text',full:true}],
+    def:function(){ return {cat:'Hidratos',name:'',unit:'uds',qty:0,rec:0,kcal:0,exp:'',loc:'',notes:''}; } },
+  tools: { title:'utensilio', fields:[
+    {k:'name',l:'Nombre',t:'text',req:true,full:true},{k:'cat',l:'Categoría',t:'select',o:CAT_TOOLS},{k:'prio',l:'Prioridad',t:'select',o:PRIOS},
+    {k:'have',l:'Ya lo tengo',t:'check'},{k:'tip',l:'Uso en emergencia / truco',t:'text',full:true}],
+    def:function(){ return {name:'',cat:'Herramientas',prio:'Alta',have:false,tip:''}; } },
+  bag: { title:'elemento de la mochila', fields:[
+    {k:'name',l:'Nombre',t:'text',req:true,full:true},{k:'cat',l:'Categoría',t:'select',o:CAT_BAG},{k:'have',l:'Preparado',t:'check'},{k:'notes',l:'Notas',t:'text',full:true}],
+    def:function(){ return {name:'',cat:'Herramientas',have:false,notes:''}; } },
+  contacts: { title:'contacto', fields:[
+    {k:'name',l:'Nombre',t:'text',req:true},{k:'phone',l:'Teléfono',t:'text'},{k:'role',l:'Función / relación',t:'text',full:true},{k:'notes',l:'Notas',t:'text',full:true}],
+    def:function(){ return {name:'',role:'',phone:'',notes:''}; } },
+  guides: { title:'guía', fields:[
+    {k:'title',l:'Título',t:'text',req:true,full:true},{k:'color',l:'Color',t:'select',o:Object.keys(GUIDE_COLORS)},
+    {k:'body',l:'Contenido',t:'area',full:true,h:'"- " viñeta · "## " subtítulo · **negrita**'}],
+    def:function(){ return {title:'',color:'Gris',body:''}; } },
+  log: { title:'entrada del diario', fields:[
+    {k:'date',l:'Fecha',t:'date'},{k:'water',l:'Agua consumida (L)',t:'number'},{k:'gas',l:'Gas usado (minutos)',t:'number'},
+    {k:'meals',l:'Comidas',t:'text',full:true,ph:'Desayuno, comida, cena'},{k:'notes',l:'Salud / incidencias',t:'area',full:true}],
+    def:function(){ return {date:TODAY_ISO,water:0,gas:0,meals:'',notes:''}; } }
+};
+
+var modalCtx = null;
+function openEditor(col, id){
+  var sc = SCHEMAS[col], item = id ? find(col,id) : sc.def();
+  if (!item) return;
+  modalCtx = {col:col, id:id};
+  var h = '<div class="modal-bg" data-act="mclose-bg"><div class="modal" role="dialog" aria-modal="true"><h3>'+(id?'Editar ':'Añadir ')+sc.title+'</h3><form id="mform"><div class="grid g2">';
+  sc.fields.forEach(function(f){
+    var v = item[f.k], inp;
+    if (f.t==='select') inp = '<select name="'+f.k+'">'+f.o.map(function(o){return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>';}).join('')+'</select>';
+    else if (f.t==='area') inp = '<textarea name="'+f.k+'" rows="'+(col==='guides'?12:3)+'">'+esc(v)+'</textarea>';
+    else if (f.t==='check') inp = '<label style="display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" class="chk" name="'+f.k+'" '+(v?'checked':'')+'> Sí</label>';
+    else inp = '<input type="'+f.t+'" name="'+f.k+'" value="'+esc(v)+'" '+(f.t==='number'?'step="any" min="0"':'')+' placeholder="'+esc(f.ph||'')+'" '+(f.req?'required':'')+'>';
+    h += '<div class="field" '+(f.full?'style="grid-column:1/-1"':'')+'><label>'+esc(f.l)+'</label>'+inp+(f.h?'<div class="h">'+esc(f.h)+'</div>':'')+'</div>';
+  });
+  h += '</div><div class="foot"><button type="button" class="btn" data-act="mclose">Cancelar</button><button type="submit" class="btn p">Guardar</button></div></form></div></div>';
+  showModal(h);
+  modalCtx = {col:col, id:id};
+  var first = document.querySelector('#mform input[type=text], #mform input, #mform select'); if (first) first.focus();
+}
+function showModal(h){ closeModal(); var d = document.createElement('div'); d.id='modal-host'; d.innerHTML = h; document.body.appendChild(d); }
+function closeModal(){ var m = document.getElementById('modal-host'); if (m) m.remove(); modalCtx = null; }
+function confirmBox(msg, yes){
+  showModal('<div class="modal-bg" data-act="mclose-bg"><div class="modal"><h3>¿Seguro?</h3><p>'+msg+'</p><div class="foot"><button class="btn" data-act="mclose">Cancelar</button><button class="btn p" id="cyes">Sí, continuar</button></div></div></div>');
+  document.getElementById('cyes').onclick = function(){ closeModal(); yes(); };
+}
+function saveEditor(form){
+  var ctx = modalCtx, sc = SCHEMAS[ctx.col];
+  var item = ctx.id ? find(ctx.col, ctx.id) : Object.assign({id:uid()}, sc.def());
+  var fd = form.elements;
+  for (var i=0;i<sc.fields.length;i++){
+    var f = sc.fields[i], el = fd[f.k];
+    if (f.t==='check') item[f.k] = el.checked;
+    else if (f.t==='number') item[f.k] = num(el.value);
+    else item[f.k] = el.value.trim();
+    if (f.req && !item[f.k]){ el.focus(); return; }
+  }
+  if (ctx.col==='food' && item.cat==='Agua' && !item.unit) item.unit = 'L';
+  if (!ctx.id) state[ctx.col].push(item);
+  closeModal();
+  commit(ctx.id ? 'Cambios guardados' : 'Añadido');
+}
+
+function toast(msg){
+  var t = document.createElement('div'); t.className='toast'; t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2600);
+}
+
+/* ================= EVENTOS ================= */
+document.addEventListener('click', function(e){
+  var el = e.target.closest('[data-act]'); if (!el) return;
+  var a = el.getAttribute('data-act'), id = el.getAttribute('data-id'), col = el.getAttribute('data-col');
+  if (a==='mclose-bg'){ if (e.target===el) closeModal(); return; }
+  if (a==='toggle'){ var t = find(col,id); if (t){ t.have = el.checked; commit(); } return; }
+  if (el.tagName==='INPUT') return;
+  switch(a){
+    case 'tab': view.tab = el.getAttribute('data-v'); try{ location.hash = view.tab; }catch(_){} render(); window.scrollTo(0,0); break;
+    case 'edit': openEditor(col, id); break;
+    case 'del': confirmBox('Se eliminará este elemento.', function(){ state[col] = state[col].filter(function(x){return x.id!==id;}); commit('Eliminado'); }); break;
+    case 'mclose': closeModal(); break;
+    case 'logout': if (fb){ if (fb.unsub){ fb.unsub(); fb.unsub = null; } fb.U.signOut(fb.auth); } break;
+    case 'forgot': (function(){ var f = document.getElementById('loginf'); var em = f && f.email.value.trim(); if (!em){ loginErr = 'Escribe primero tu correo.'; render(); return; }
+      fb.U.sendPasswordResetEmail(fb.auth, em).then(function(){ loginErr=''; loginInfo='Si el correo está dado de alta, te llegará un enlace para cambiar la contraseña.'; render(); }).catch(function(e){ loginErr = authMsg(e); render(); }); })(); break;
+    case 'inc': case 'dec': var f = find('food',id); if (f){ f.qty = Math.max(0, Math.round((num(f.qty)+(a==='inc'?1:-1))*100)/100); commit(); } break;
+    case 'review': state.config.lastReview = TODAY_ISO; commit('Revisión registrada hoy'); break;
+    case 'bagreset': confirmBox('Se desmarcarán todos los elementos de la mochila (útil para empezar una revisión).', function(){ state.bag.forEach(function(b){b.have=false;}); commit(); }); break;
+    case 'gup': var i = state.guides.findIndex(function(g){return g.id===id;}); if (i>0){ var g = state.guides.splice(i,1)[0]; state.guides.splice(i-1,0,g); commit(); } break;
+    case 'printall': PRINT_SECTIONS.forEach(function(s){view.print[s[0]]=true;}); render(); break;
+    case 'printnone': PRINT_SECTIONS.forEach(function(s){view.print[s[0]]=false;}); render(); break;
+    case 'print': doPrint(); break;
+    case 'dlapp': saveFile('plan-emergencia-offline.html', buildAppDoc()); break;
+    case 'dljson': saveFile('plan-emergencia-datos-'+TODAY_ISO+'.json', JSON.stringify(state, null, 2)); break;
+    case 'copyjson': try { navigator.clipboard.writeText(JSON.stringify(state)).then(function(){toast('Datos copiados al portapapeles');}, function(){toast('No se pudo copiar');}); } catch(_){ toast('No se pudo copiar'); } break;
+    case 'reset': confirmBox('Se borrarán tus datos y se cargarán los de ejemplo.', function(){ var s = defaults(); state = s; commit('Datos restablecidos'); }); break;
+    case 'resetguides': confirmBox('Se sustituirán las guías actuales por las guías por defecto.', function(){ state.guides = defaultGuides().map(function(g){ g.id = uid()+g.id; return g; }); commit('Guías restauradas'); }); break;
+  }
+});
+document.addEventListener('submit', function(e){
+  if (e.target.id==='mform'){ e.preventDefault(); saveEditor(e.target); }
+  if (e.target.id==='loginf'){ e.preventDefault(); var f = e.target, btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Entrando…'; loginErr=''; loginInfo='';
+    fb.U.signInWithEmailAndPassword(fb.auth, f.email.value.trim(), f.pass.value).catch(function(err){ loginErr = authMsg(err); render(); }); }
+});
+function authMsg(e){
+  var c = e && e.code || '';
+  if (c==='auth/invalid-credential'||c==='auth/wrong-password'||c==='auth/user-not-found'||c==='auth/invalid-email'||c==='auth/invalid-login-credentials') return 'Correo o contraseña incorrectos.';
+  if (c==='auth/too-many-requests') return 'Demasiados intentos. Espera unos minutos.';
+  if (c==='auth/network-request-failed') return 'Sin conexión con el servidor.';
+  return 'No se pudo entrar ('+c+').';
+}
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeModal(); });
+document.addEventListener('input', function(e){
+  if (e.target.id==='food-q'){ view.foodQ = e.target.value; render(); }
+});
+document.addEventListener('change', function(e){
+  var t = e.target;
+  if (t.hasAttribute('data-cfg')){ var k = t.getAttribute('data-cfg'); state.config[k] = t.type==='number' ? num(t.value) : t.value; commit(); return; }
+  if (t.hasAttribute('data-plan')){ state.plan[t.getAttribute('data-plan')] = t.value; commit(); return; }
+  if (t.hasAttribute('data-view')){ var vk = t.getAttribute('data-view'); view[vk] = t.type==='checkbox' ? t.checked : t.value; render(); return; }
+  if (t.hasAttribute('data-print')){ view.print[t.getAttribute('data-print')] = t.checked; return; }
+  if (t.id==='imp' && t.files && t.files[0]){
+    var r = new FileReader();
+    r.onload = function(ev){
+      try { var s = JSON.parse(ev.target.result); confirmBox('Se sustituirán los datos actuales por los del archivo importado.', function(){ state = normalize(s); commit('Datos importados'); }); }
+      catch(err){ toast('El archivo no es un JSON válido'); }
+    };
+    r.readAsText(t.files[0]);
+  }
+});
+window.addEventListener('hashchange', function(){ var h = (location.hash||'').slice(1); if (TABS.some(function(t){return t[0]===h;}) && h!==view.tab){ view.tab = h; render(); } });
+
+/* ================= ARCHIVOS ================= */
+function buildAppDoc(){
+  var css = document.getElementById('app-css').textContent;
+  var js = document.getElementById('app-js').textContent;
+  var json = JSON.stringify(state).replace(/</g,'\\u003c');
+  return '<!DOCTYPE html>\n<html lang="es">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Plan de Emergencia Familiar</title>\n<script>window.PLAN_OFFLINE=true;</scr'+'ipt>\n<style id="app-css">'+css+'</style>\n</head>\n<body>\n<div id="root"></div>\n<script id="app-state" type="application/json">'+json+'</scr'+'ipt>\n<script id="app-js">'+js+'</scr'+'ipt>\n</body>\n</html>\n';
+}
+function saveFile(name, data){
+  if (downloadsApi){
+    downloadsApi.save({filename:name, data:data}).then(function(){ toast('Archivo descargado'); }).catch(function(e){
+      var c = e && e.code;
+      if (c==='declined') return;
+      if (c==='rate_limited') { toast('Espera un momento y vuelve a intentarlo'); return; }
+      toast('No se pudo descargar en esta vista');
+    });
+    return;
+  }
+  if (isHosted){ toast('Las descargas no están disponibles en esta vista'); return; }
+  try {
+    var blob = new Blob([data], {type: /\.json$/.test(name)?'application/json':'text/html'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  } catch(e){ toast('No se pudo descargar'); }
+}
+function doPrint(){
+  var any = PRINT_SECTIONS.some(function(s){return view.print[s[0]];});
+  if (!any){ toast('Marca al menos una hoja'); return; }
+  var doc = buildPrintDoc(true);
+  if (isHosted){ saveFile('plan-emergencia-hojas-'+TODAY_ISO+'.html', doc); return; }
+  var ifr = document.createElement('iframe');
+  ifr.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0';
+  document.body.appendChild(ifr);
+  ifr.onload = function(){ try { ifr.contentWindow.focus(); ifr.contentWindow.print(); } catch(e){ toast('No se pudo abrir la impresión'); } setTimeout(function(){ ifr.remove(); }, 60000); };
+  ifr.srcdoc = buildPrintDoc(false);
+}
+
+/* ================= DOCUMENTO DE IMPRESIÓN ================= */
+var PRINT_CSS = '@page{size:A4;margin:12mm}*{box-sizing:border-box}body{font:10pt/1.35 Arial,Helvetica,sans-serif;color:#000;margin:0}'+
+ 'h1{font-size:17pt;margin:0 0 2mm}h2{font-size:13pt;margin:0 0 2mm;border-bottom:2px solid #000;padding-bottom:1mm}h3{font-size:10.5pt;margin:4mm 0 1.5mm}'+
+ '.sec{page-break-before:always}.sec.first{page-break-before:auto}.meta{font-size:8.5pt;color:#333;margin-bottom:3mm;display:flex;justify-content:space-between}'+
+ 'table{width:100%;border-collapse:collapse;margin:1mm 0 3mm;page-break-inside:auto}tr{page-break-inside:avoid}th,td{border:1px solid #555;padding:1.4mm 1.6mm;vertical-align:top;text-align:left}'+
+ 'th{background:#e6e6e6;font-size:8.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}td{font-size:9pt}.r{text-align:right}.c{text-align:center}'+
+ '.box{display:inline-block;width:3.6mm;height:3.6mm;border:1.2px solid #000;vertical-align:-0.6mm}.box.x{background:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}'+
+ '.blank td{height:7.5mm}.kv{display:grid;grid-template-columns:62mm 1fr;gap:1mm 4mm}.kv div:nth-child(odd){color:#333}.kv div:nth-child(even){font-weight:bold}'+
+ '.cols{columns:2;column-gap:6mm}.g{break-inside:avoid;border:1px solid #777;padding:2.5mm 3mm;margin:0 0 4mm}.g h4{margin:0 0 1.5mm;font-size:10.5pt}.g ul{margin:1mm 0 1.5mm;padding-left:4.5mm}.g li{margin:.6mm 0}.g h5{margin:2mm 0 .8mm;font-size:9.5pt}.g p{margin:1mm 0}'+
+ '.sos{border:2px solid #000;padding:2mm 3mm;font-weight:bold;font-size:12pt;margin:2mm 0 4mm}.note{font-size:8.5pt;color:#333}.line{border-bottom:1px solid #555;height:6.5mm}'+
+ '.cover{border:2px solid #000;padding:5mm;margin-bottom:5mm}.w{font-weight:bold}'+
+ '@media screen{body{background:#888;padding:10mm 0}.sec{background:#fff;width:210mm;min-height:297mm;margin:0 auto 8mm;padding:12mm;box-shadow:0 2px 10px rgba(0,0,0,.4)}.bar{position:sticky;top:0;background:#141a24;color:#fff;padding:8px;text-align:center;font:14px Arial;margin:-10mm 0 8mm}.bar button{font:14px Arial;padding:6px 14px;margin-left:10px;cursor:pointer}}'+
+ '@media print{.bar{display:none}}';
+
+function buildPrintDoc(autoPrint){
+  var k = calc(), c = state.config, P = view.print, out = [], first = true;
+  var gen = 'Generado el '+fDate(TODAY_ISO)+' · '+esc(c.household)+' · '+fmt(k.people,0)+' personas / '+fmt(k.days,0)+' días';
+  function sec(title, inner){ out.push('<section class="sec'+(first?' first':'')+'"><div class="meta"><span>Plan de Emergencia Familiar</span><span>'+gen+'</span></div><h2>'+title+'</h2>'+inner+'</section>'); first = false; }
+  function blanks(cols, rows){ var r=''; for (var i=0;i<rows;i++){ r+='<tr class="blank">'; for (var j=0;j<cols;j++) r+='<td></td>'; r+='</tr>'; } return r; }
+  function box(on){ return '<span class="box'+(on?' x':'')+'"></span>'; }
+
+  if (P.resumen){
+    var s = '<div class="cover"><h1>Plan de Emergencia · '+esc(c.household)+'</h1><div class="sos">EMERGENCIAS: 112 (gratuito, sin saldo)</div><div class="kv">';
+    s += '<div>Personas / días objetivo</div><div>'+fmt(k.people,0)+' personas · '+fmt(k.days,0)+' días</div>';
+    s += '<div>Agua necesaria</div><div>'+fmt(k.waterNeed,0)+' L ('+fmt(k.drinkNeed,0)+' L beber + '+fmt(k.waterNeed-k.drinkNeed,0)+' L cocina/higiene) · '+fmt(k.dailyWater,1)+' L/día</div>';
+    s += '<div>Agua almacenada</div><div>'+fmt(k.waterStock,0)+' L → '+fmt(k.waterDays,1)+' días</div>';
+    s += '<div>Calorías necesarias</div><div>'+fmt(k.kcalNeed,0)+' kcal ('+fmt(k.people*num(c.kcal),0)+' kcal/día)</div>';
+    s += '<div>Calorías almacenadas</div><div>'+fmt(k.kcalStock,0)+' kcal → '+fmt(k.foodDays,1)+' días</div>';
+    s += '<div>Gas</div><div>'+fmt(c.gasStock,0)+' cartuchos de '+fmt(k.gasNeed,0)+' necesarios → '+fmt(k.gasDays,1)+' días</div>';
+    s += '<div>AUTONOMÍA REAL</div><div>'+fmt(Math.floor(k.autonomy),0)+' días</div>';
+    s += '<div>Última revisión</div><div>'+(c.lastReview?fDate(c.lastReview):'Sin registrar')+'</div></div></div>';
+    s += '<h3>Ración diaria orientativa para el grupo</h3><table><tr><th>Recurso</th><th class="r">Por día</th><th>Notas</th></tr>';
+    s += '<tr><td>Agua para beber</td><td class="r">'+fmt(k.people*num(c.waterDrink),1)+' L</td><td>'+fmt(c.waterDrink,1)+' L por persona</td></tr>';
+    s += '<tr><td>Agua cocina + higiene</td><td class="r">'+fmt(k.people*num(c.waterExtra),1)+' L</td><td>Reutiliza el agua de cocer para fregar</td></tr>';
+    s += '<tr><td>Calorías</td><td class="r">'+fmt(k.people*num(c.kcal),0)+' kcal</td><td>'+fmt(c.kcal,0)+' kcal por persona</td></tr>';
+    s += '<tr><td>Gas</td><td class="r">'+fmt(c.gasMinDay,0)+' min</td><td>Usa tapa y cocción retenida</td></tr></table>';
+    s += '<h3>Avisos en la fecha de impresión</h3><table><tr><th>Aviso</th></tr>';
+    var any = false;
+    k.expired.forEach(function(f){ any=true; s += '<tr><td>CADUCADO: '+esc(f.name)+' ('+fDate(f.exp)+')</td></tr>'; });
+    k.rotate.forEach(function(f){ any=true; s += '<tr><td>Rotar: '+esc(f.name)+' caduca el '+fDate(f.exp)+'</td></tr>'; });
+    k.critMissing.forEach(function(t){ any=true; s += '<tr><td>Falta utensilio crítico: '+esc(t.name)+'</td></tr>'; });
+    if (!any) s += '<tr><td>Sin avisos.</td></tr>';
+    s += '</table>';
+    sec('Resumen del plan', s);
+  }
+  if (P.plan){
+    var p = state.plan, s2 = '<div class="sos">EMERGENCIAS: 112</div><table>';
+    [['Punto de encuentro cerca de casa',p.meet1],['Punto de encuentro fuera del barrio',p.meet2],['Mochilas y reserva',p.bagPlace],['Llave de paso del gas',p.gasValve],['Llave de paso del agua',p.waterValve],['Cuadro eléctrico / interruptor general',p.elecPanel]].forEach(function(r){
+      s2 += '<tr><th style="width:62mm">'+r[0]+'</th><td>'+(r[1]?esc(r[1]):'<div class="line"></div>')+'</td></tr>'; });
+    s2 += '</table><h3>Notas importantes (alergias, medicación, mascotas…)</h3><table><tr><td style="height:24mm">'+esc(p.notes).replace(/\n/g,'<br>')+'</td></tr></table>';
+    s2 += '<h3>Contactos</h3><table><tr><th>Nombre</th><th>Función</th><th style="width:34mm">Teléfono</th><th>Notas</th></tr>';
+    state.contacts.forEach(function(ct){ s2 += '<tr><td class="w">'+esc(ct.name)+'</td><td>'+esc(ct.role)+'</td><td class="w">'+esc(ct.phone)+'</td><td>'+esc(ct.notes)+'</td></tr>'; });
+    s2 += blanks(4,4) + '</table>';
+    s2 += '<h3>Cierre de vivienda antes de evacuar</h3><table><tr><td>'+box()+' Cerrar llave del gas &nbsp;&nbsp; '+box()+' Bajar interruptor general &nbsp;&nbsp; '+box()+' Cerrar llave del agua &nbsp;&nbsp; '+box()+' Puertas y ventanas cerradas &nbsp;&nbsp; '+box()+' Avisar al contacto común</td></tr></table>';
+    sec('Plan familiar y contactos', s2);
+  }
+  if (P.despensa){
+    var s3 = '<p class="note">Ordenado por categoría y fecha de caducidad (consumir primero lo de arriba). Columnas finales en blanco para anotar recuentos a mano.</p><table><tr><th>Producto</th><th>Ud.</th><th class="r">Rec.</th><th class="r">Stock</th><th>Caduca</th><th>Ubicación</th><th style="width:15mm">__/__</th><th style="width:15mm">__/__</th><th style="width:15mm">__/__</th><th style="width:15mm">__/__</th></tr>';
+    var cat = '';
+    state.food.slice().sort(function(a,b){ var ca=CAT_FOOD.indexOf(a.cat), cb=CAT_FOOD.indexOf(b.cat); if(ca!==cb) return ca-cb; return (a.exp||'9999')<(b.exp||'9999')?-1:1; }).forEach(function(f){
+      if (f.cat!==cat){ cat = f.cat; s3 += '<tr><th colspan="10">'+esc(cat)+'</th></tr>'; }
+      var st = statusOf(f);
+      s3 += '<tr><td>'+esc(f.name)+(st.c==='b'?' <b>(CADUCADO)</b>':st.c==='w'?' <b>(rotar)</b>':'')+'</td><td>'+esc(f.unit)+'</td><td class="r">'+fmt(recOf(f,k.factor))+'</td><td class="r w">'+fmt(f.qty)+'</td><td>'+fDate(f.exp)+'</td><td>'+esc(f.loc||'')+'</td><td></td><td></td><td></td><td></td></tr>';
+    });
+    s3 += '<tr><th colspan="10">Añadidos a mano</th></tr>' + blanks(10,5) + '</table>';
+    s3 += '<p class="note">Totales en la fecha de impresión: agua '+fmt(k.waterStock,0)+' L · '+fmt(k.kcalStock,0)+' kcal · gas '+fmt(c.gasStock,0)+' cartuchos.</p>';
+    sec('Inventario de la despensa', s3);
+  }
+  if (P.compra){
+    var s4 = '<table><tr><th style="width:9mm"></th><th>Producto / utensilio</th><th>Categoría</th><th class="r">Falta</th></tr>';
+    if (!k.shopping.length) s4 += '<tr><td></td><td colspan="3">No falta nada para completar la reserva.</td></tr>';
+    k.shopping.forEach(function(x){ s4 += '<tr><td class="c">'+box()+'</td><td>'+esc(x.name)+(x.prio==='Crítica'?' <b>(CRÍTICO)</b>':'')+'</td><td>'+esc(x.cat)+'</td><td class="r">'+(x.need!==null?fmt(Math.ceil(x.need*10)/10)+' '+esc(x.unit):'1')+'</td></tr>'; });
+    k.expired.forEach(function(f){ s4 += '<tr><td class="c">'+box()+'</td><td>Reponer '+esc(f.name)+' (caducado)</td><td>'+esc(f.cat)+'</td><td class="r">'+fmt(f.qty)+' '+esc(f.unit)+'</td></tr>'; });
+    s4 += blanks(4,6) + '</table>';
+    sec('Lista de la compra', s4);
+  }
+  if (P.utensilios){
+    var s5 = '<table><tr><th style="width:9mm">Hay</th><th>Utensilio</th><th>Categoría</th><th>Prioridad</th><th>Uso / truco</th><th style="width:18mm">Revisado</th></tr>';
+    state.tools.slice().sort(function(a,b){ var ca=CAT_TOOLS.indexOf(a.cat), cb=CAT_TOOLS.indexOf(b.cat); return ca!==cb?ca-cb:PRIOS.indexOf(a.prio)-PRIOS.indexOf(b.prio); }).forEach(function(t){
+      s5 += '<tr><td class="c">'+box(t.have)+'</td><td>'+esc(t.name)+'</td><td>'+esc(t.cat)+'</td><td'+(t.prio==='Crítica'?' class="w"':'')+'>'+esc(t.prio)+'</td><td>'+esc(t.tip)+'</td><td></td></tr>'; });
+    s5 += blanks(6,4) + '</table><p class="note">■ = ya lo tenías al imprimir · ☐ = pendiente.</p>';
+    sec('Checklist de utensilios, energía e iluminación', s5);
+  }
+  if (P.mochila){
+    var np = Math.min(6, Math.max(1, Math.round(k.people))), head = '';
+    for (var i=1;i<=np;i++) head += '<th class="c" style="width:16mm">Pers. '+i+'</th>';
+    var s6 = '<p class="note">Una mochila por persona. Escribe el nombre en la cabecera y marca cada elemento al prepararla.</p><table><tr><th>Elemento</th><th>Categoría</th>'+head+'</tr>';
+    state.bag.slice().sort(function(a,b){ return CAT_BAG.indexOf(a.cat)-CAT_BAG.indexOf(b.cat); }).forEach(function(b){
+      var cells=''; for (var i=0;i<np;i++) cells += '<td class="c">'+box()+'</td>';
+      s6 += '<tr><td>'+esc(b.name)+(b.notes?' <span class="note">· '+esc(b.notes)+'</span>':'')+'</td><td>'+esc(b.cat)+'</td>'+cells+'</tr>'; });
+    var bc=''; for (var j=0;j<np;j++) bc += '<td></td>';
+    for (var r=0;r<3;r++) s6 += '<tr class="blank"><td></td><td></td>'+bc+'</tr>';
+    s6 += '</table><p class="note">Fecha de la última revisión de las mochilas: ____ / ____ / ________</p>';
+    sec('Checklist de la mochila de evacuación (72 h)', s6);
+  }
+  if (P.guias){
+    var s7 = '<div class="sos">EMERGENCIAS: 112 · Sigue siempre las indicaciones de las autoridades</div><div class="cols">';
+    state.guides.forEach(function(g){ s7 += '<div class="g"><h4>'+esc(g.title)+'</h4>'+mdLite(g.body)+'</div>'; });
+    s7 += '</div>';
+    sec('Guías y protocolos', s7);
+  }
+  if (P.diario){
+    var s8 = '<p class="note">Objetivo diario: '+fmt(k.dailyWater,1)+' L de agua · '+fmt(k.people*num(c.kcal),0)+' kcal · '+fmt(c.gasMinDay,0)+' min de gas. Empieza con '+fmt(k.waterStock,0)+' L de agua.</p><table><tr><th style="width:9mm">Día</th><th style="width:18mm">Fecha</th><th style="width:17mm">Agua usada (L)</th><th style="width:17mm">Agua queda (L)</th><th>Desayuno</th><th>Comida</th><th>Cena</th><th style="width:14mm">Gas (min)</th><th>Salud / incidencias</th></tr>';
+    for (var d=1; d<=Math.min(60,Math.round(k.days)); d++) s8 += '<tr class="blank"><td class="c">'+d+'</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+    s8 += '</table>';
+    sec('Hoja de control diario', s8);
+  }
+  if (P.salidas){
+    var s9 = '<p class="note">Anota cada producto que sale de la reserva. Así sabrás qué queda sin recontar todo.</p><table><tr><th style="width:20mm">Fecha</th><th>Producto</th><th style="width:22mm">Cantidad</th><th style="width:22mm">Quedan</th><th style="width:28mm">Quién</th></tr>' + blanks(5,32) + '</table>';
+    sec('Registro de salidas de la despensa', s9);
+  }
+  if (P.blanco){
+    var s10 = '<table><tr><th>Producto</th><th style="width:16mm">Ud.</th><th style="width:16mm">Cantidad</th><th style="width:22mm">Caducidad</th><th style="width:22mm">Ubicación</th><th style="width:30mm">Notas</th></tr>' + blanks(6,32) + '</table>';
+    sec('Inventario en blanco', s10);
+  }
+  var bar = autoPrint ? '' : '';
+  var head = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Plan de Emergencia · hojas para imprimir</title><style>'+PRINT_CSS+'</style></head><body>';
+  if (autoPrint) head += '<div class="bar">Hojas del Plan de Emergencia <button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button></div>';
+  var tail = autoPrint ? '<scr'+'ipt>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});</scr'+'ipt>' : '';
+  return head + out.join('') + tail + '</body></html>';
+}
+
+/* ================= ARRANQUE ================= */
+var h0 = (location.hash||'').slice(1);
+if (TABS.some(function(t){return t[0]===h0;})) view.tab = h0;
+window.addEventListener('online', setBadge); window.addEventListener('offline', setBadge);
+
+function startLocal(msg){ mode = 'local'; loadLocal(); render(); if (msg) toast(msg); }
+
+if (OFFLINE_COPY || !CFG || !CFG.apiKey){ startLocal(); }
+else {
+  render();
+  var V = 'https://www.gstatic.com/firebasejs/10.12.2/';
+  Promise.all([import(V+'firebase-app.js'), import(V+'firebase-auth.js'), import(V+'firebase-firestore.js')]).then(function(m){
+    var A = m[0], U = m[1], F = m[2];
+    var app = A.initializeApp(CFG), auth = U.getAuth(app), db;
+    try { db = F.initializeFirestore(app, { localCache: F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) }); }
+    catch(e){ db = F.getFirestore(app); }
+    fb = { A:A, U:U, F:F, auth:auth, db:db, ref: F.doc(db, 'planes', PLAN_ID), user:null, unsub:null };
+    U.onAuthStateChanged(auth, function(user){
+      fb.user = user;
+      if (fb.unsub){ fb.unsub(); fb.unsub = null; }
+      if (!user){ state = normalize(null); mode = 'login'; render(); return; }
+      mode = 'loading'; render();
+      var first = true;
+      fb.unsub = F.onSnapshot(fb.ref, { includeMetadataChanges: true }, function(snap){
+        fromCache = snap.metadata.fromCache;
+        if (snap.exists()){
+          var s2 = null;
+          try { s2 = JSON.parse(snap.data().data); } catch(e){}
+          if (s2 && (first || (!pushTimer && (s2.savedAt||0) > (state.savedAt||0)))){ state = normalize(s2); mode = 'cloud'; render(); }
+          else if (mode !== 'cloud'){ mode = 'cloud'; render(); }
+          else setBadge();
+          first = false;
+        } else if (!snap.metadata.fromCache){
+          // primera vez: se crea el plan en la nube con los datos de ejemplo
+          first = false; mode = 'cloud'; state = normalize(null); commit('Plan creado en la nube');
+        }
+      }, function(err){
+        if (err && err.code === 'permission-denied'){ mode = 'denied'; render(); }
+        else toast('Error de sincronización: ' + (err && err.code));
+      });
+    });
+  }).catch(function(){ startLocal('No se pudo cargar Firebase (¿sin conexión?). Modo local.'); });
+}
+
+if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && !OFFLINE_COPY){
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+})();
+</script>
+</body>
+</html>
