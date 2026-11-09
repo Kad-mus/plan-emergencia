@@ -1,6 +1,6 @@
 // Service worker: permite abrir la app sin conexión una vez visitada.
-const CACHE = 'plan-emergencia-v1';
-const CORE = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const CACHE = 'plan-emergencia-v2';
+const CORE = ['./', './index.html', './config.js', './install.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
