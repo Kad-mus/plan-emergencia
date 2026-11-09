@@ -941,7 +941,7 @@ else {
   Promise.all([import(V+'firebase-app.js'), import(V+'firebase-auth.js'), import(V+'firebase-firestore.js')]).then(function(m){
     var A = m[0], U = m[1], F = m[2];
     var app = A.initializeApp(CFG), auth = U.getAuth(app), db;
-    try { db = F.initializeFirestore(app, { localCache: F.persistentLocalCache({ tabManager: F.persistentMultipleTabManager() }) }); }
+    try { db = F.initializeFirestore(app, { localCache: F.persistentLocalCache({ tabManager: F.persistentSingleTabManager({ forceOwnership: true }) }) }); }
     catch(e){ db = F.getFirestore(app); }
     fb = { A:A, U:U, F:F, auth:auth, db:db, ref: F.doc(db, 'planes', PLAN_ID), user:null, unsub:null };
     U.onAuthStateChanged(auth, function(user){
