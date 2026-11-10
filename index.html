@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plan de Emergencia Familiar</title>
-<meta name="theme-color" content="#141a24">
+<meta name="theme-color" content="#080c12">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-v2-192.png">
+<link rel="apple-touch-icon" href="icon-v2-180.png">
 <script src="config.js"></script><script src="install.js"></script>
 <style id="app-css">
 :root{--bg:#f4f5f7;--card:#fff;--ink:#1e2430;--mut:#667085;--line:#e3e6eb;--acc:#ea580c;--acc2:#fff1e8;--ok:#047857;--okb:#d1fae5;--warn:#92400e;--warnb:#fef3c7;--bad:#991b1b;--badb:#fee2e2;--blue:#1d4ed8;--blueb:#dbeafe;--dark:#141a24}
@@ -104,6 +104,42 @@ tr:hover td{background:#fafbfc}
 textarea{min-height:70px;resize:vertical}
 .login{max-width:380px;margin:8vh auto;padding:24px}.login h2{margin-bottom:4px}.login .grid{gap:12px;margin-top:14px}.err{color:var(--bad);font-size:13px;min-height:18px}.who{font-size:12px;color:#9aa4b2}.btn.hd{background:#243042;border-color:#334155;color:#e2e8f0}
 .foot-note{margin-top:28px;font-size:12px;color:var(--mut);text-align:center}
+/* ===== Tema oscuro ===== */
+:root{color-scheme:dark;--bg:#0d1219;--card:#161d28;--ink:#e6eaf0;--mut:#93a0b4;--line:#263041;--acc:#f97316;--acc2:#2b1a0e;--ok:#4ade80;--okb:#0f2c22;--warn:#fbbf24;--warnb:#33270c;--bad:#f87171;--badb:#3b1717;--blue:#7cb3ff;--blueb:#14243c;--dark:#080c12}
+body{background:radial-gradient(1200px 600px at 50% -200px,#1a2333 0%,var(--bg) 60%) fixed,var(--bg)}
+.hdr{background:linear-gradient(180deg,#0b1018,#080c12);border-bottom:1px solid #1d2635}
+.logo{background:#ea580c url(icon-v2-192.png) center/cover no-repeat;font-size:0;box-shadow:0 4px 14px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.06)}
+.tabs{background:rgba(13,18,25,.92);backdrop-filter:blur(8px);border-bottom-color:var(--line)}
+.tab:hover{color:#fff}
+.tab.on{color:#fb923c;border-bottom-color:#fb923c}
+.card,.tbl,.modal,.printopts label{background:var(--card);border-color:var(--line)}
+.card{box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 6px 18px rgba(0,0,0,.25)}
+.btn{background:#1d2633;border-color:#2c3748;color:var(--ink)}
+.btn:hover{border-color:#3d4a5f;background:#222c3b}
+.btn.p{background:#ea580c;border-color:#ea580c;color:#fff}
+.btn.p:hover{background:#f97316}
+.btn.d{background:#2c3748;border-color:#2c3748}
+.btn.x{background:none;color:var(--mut)}
+input[type=text],input[type=number],input[type=date],input[type=search],input[type=password],select,textarea{background:#0f151e!important;border-color:#2c3748!important;color:var(--ink)}
+input::placeholder,textarea::placeholder{color:#5f6b7e}
+input:focus,select:focus,textarea:focus{outline:2px solid rgba(249,115,22,.45);border-color:#f97316!important}
+th{background:#1b2330;color:#a9b4c6}
+td{border-top-color:#212a38}
+tr:hover td{background:#1a2230}
+.pill{background:#232d3c;color:#c7d0dd}
+.st.n{background:#232d3c;color:var(--mut)}
+.meter{background:#242e3d}
+.field label{color:#c3ccd9}
+.guide .body{color:#c9d1dc}
+.guide h4{color:color-mix(in srgb,var(--c,#94a3b8) 55%,#ffffff)}
+.prio-Alta{color:#f59e0b}
+.modal-bg{background:rgba(0,0,0,.7)}
+.modal{box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.toast{background:#263041;color:#fff}
+.chk{accent-color:#22c55e}
+.kpi .v{color:#f3f5f8}
+.foot-note{color:#6c788b}
+a{color:var(--blue)}
 </style>
 </head>
 <body>
